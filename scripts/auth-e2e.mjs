@@ -88,7 +88,7 @@ try {
   assert.ok(!jar.has("oauth-oidc"), "no transaction started by refused logins");
   const login = (rt = "/dashboard") => post("pass", { origin: B }, rt);
   let r = await login();
-  assert.equal(r.status, 302); const toIdp = new URL(r.headers.get("location"));
+  assert.equal(r.status, 302, await r.clone().text()); const toIdp = new URL(r.headers.get("location"));
   assert.equal(toIdp.searchParams.get("code_challenge_method"), "S256"); assert.ok(toIdp.searchParams.get("state")); assert.ok(toIdp.searchParams.get("nonce"));
   assert.ok(jar.has("oauth-oidc"), "transaction cookie set");
   const idpRes = await fetch(toIdp, { redirect: "manual" }); const cbUrl = new URL(idpRes.headers.get("location"));
