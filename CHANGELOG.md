@@ -1,9 +1,9 @@
 # Changelog
 
-Derived from git history (`git log`); the project is pre-1.0 (0.x). Of the seven packages in `docs/published.md`, the registry has `create-cf-lite` at 0.4.1 and the other six at 0.4.0 (checked 2026-10-06). Entries under Unreleased describe `main`.
+Derived from git history (`git log`); the project is pre-1.0 (0.x). Of the seven packages in `docs/published.md`, the registry has all seven at 0.4.2 (checked 2026-10-06). Entries under Unreleased describe `main`.
 Versions below are the `version` fields of the packages at the commit noted.
 
-## 0.4.2 (prepared, not yet published)
+## 0.4.2 (2026-10-06)
 
 ### Removed
 
@@ -13,7 +13,7 @@ Versions below are the `version` fields of the packages at the commit noted.
 
 * **Docs: npm status corrected, issue templates**: README, getting-started and `docs/published.md` state the registry as checked on 2026-10-06 (`create-cf-lite` 0.4.1, the other six at 0.4.0, this repository at 0.4.2); bug and feature issue templates added under `.github/ISSUE_TEMPLATE`.
 * **`deploy-smoke` is off by default**: its job runs only when the repo variable `CF_SMOKE_ENABLED` is `true`, otherwise it is skipped. How to enable it: [deploy.md](docs/deploy.md#deploy-smoke-nightly-ci).
-* **`0.4.2` prepared for all seven published packages (not yet published)**: `repository`, `bugs` and `homepage` now point at `https://github.com/cf-lite/cf-lite`, the docs link written into scaffolds and the toolkit-terms link use the same URL; hosted CI runners only (`ubuntu-latest`). See [published.md](docs/published.md).
+* **`0.4.2` for all seven published packages (published 2026-10-06)**: `repository`, `bugs` and `homepage` now point at `https://github.com/cf-lite/cf-lite`, the docs link written into scaffolds and the toolkit-terms link use the same URL; hosted CI runners only (`ubuntu-latest`). See [published.md](docs/published.md).
 
 * **Public-launch preparation**: docs, agent briefs and benchmark pages carry neutral product wording only (decisions by role, no personal or tooling names); field notes keep generic technical lessons only ([field notes](docs/field-notes.md)); raw benchmark dumps (`bench/results-live/`) are no longer tracked, reproduction steps in `bench/live/README.md`; `@cf-lite/og-worker` is `private`; every published package lists `LICENSE` in `files`; new `THIRD-PARTY-NOTICES.md`; `docs:check` gains the `public-hygiene` rule (generic detection plus an optional external term list in `CF_HYGIENE_TERMS_FILE`; it prints which mode ran) and `scripts/set-repo-url.mjs` (`--check`); `bun run typecheck` works on a fresh clone after one `bun install`; docs site emits a canonical link only when `VITE_DOCS_URL` is set.
 * **Deploy smoke + screen-reader kit**: nightly `deploy-smoke` workflow (real workers.dev deploy of the quickstart, always cleaned up, [deploy.md](docs/deploy.md)); `examples/a11y-demo` and a 30-minute manual script for NVDA/VoiceOver ([a11y-screen-reader-test.md](docs/a11y-screen-reader-test.md)); `SECURITY.md` now has a reporting contact, process and response targets.

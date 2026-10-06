@@ -345,3 +345,16 @@ What was decided about cf-lite, by which role, why, and what in this repository 
 | evidence | `docs/published.md`, `.github/ISSUE_TEMPLATE/config.yml`, D-008 |
 | status | active |
 | lastChecked | 2026-10-06 by maintainer |
+
+### D-026 0.4.2 of the seven packages is published from the public repository; provenance is not available
+| field | value |
+|---|---|
+| date | 2026-10-06 |
+| decided by | owner |
+| source | this brief (task clpub9, standing owner authorisation 2026-10-06) |
+| decision | 0.4.2 of `cf-lite`, `create-cf-lite` and `@cf-lite/preact|react|solid|svelte|vue` is published from the public repository at `ea6ef1a`, tag `v0.4.2`, no provenance flag (no OIDC where it was published). `@cf-lite/solid` ships with the `seroval` advisory handled as in D-008. Every other package stays unpublished. |
+| why | The 0.4.0/0.4.1 metadata pointed at a private repository; 0.4.2 points at the public one and carries the `create-cf-lite` fix. |
+| scope | npm, `docs/published.md`, tag |
+| evidence | `docs/published.md` (`npm view` results of 2026-10-06), tag `v0.4.2` |
+| status | active |
+| lastChecked | 2026-10-06 by maintainer |

@@ -6,8 +6,8 @@
 No framework runtime sits between your code and workerd, and static traffic never wakes the Worker.
 
 > Status: **0.4, open source (MIT), version 0.x** - API may still change between minors (policy: [`docs/stability.md`](docs/stability.md)).
-> Currently on npm: `cf-lite` and `@cf-lite/preact|react|solid|svelte|vue` at 0.4.0, `create-cf-lite` at 0.4.1 (checked 2026-10-06; list: [`docs/published.md`](docs/published.md)). This repository carries 0.4.2 of all seven, the first release published from it.
-> **Known issue (fixed):** `create-cf-lite` 0.4.0 fails when run through `npx` / `npm create` (its copy filter skips templates installed under `node_modules`); 0.4.1 fixes it, so use `create-cf-lite@latest`.
+> Currently on npm: `cf-lite`, `create-cf-lite` and `@cf-lite/preact|react|solid|svelte|vue` at 0.4.2, dist-tag `latest` (checked 2026-10-06 with `npm view <package> version`; list: [`docs/published.md`](docs/published.md)). 0.4.2 is the first release published from this repository.
+> **History:** `create-cf-lite` 0.4.0 failed when run through `npx` / `npm create` (its copy filter skipped templates installed under `node_modules`); 0.4.1 and 0.4.2 fix it, so `create-cf-lite@latest` works.
 > Design + rationale: [`docs/design.md`](docs/design.md). Decisions: [`docs/DECISIONS.md`](docs/DECISIONS.md).
 
 ## Why the name
@@ -35,7 +35,7 @@ cf-lite is an independent open-source project and is not affiliated with, sponso
 
 ## 60-second quickstart (pick a UI)
 
-Needs Bun 1.4+ ([bun.sh](https://bun.sh)) and, to deploy, a Cloudflare account (`bunx wrangler login`). The packages are on npm (`create-cf-lite` 0.4.1 has the `npx` fix, 0.4.0 does not); the commands below scaffold *inside a clone* instead
+Needs Bun 1.4+ ([bun.sh](https://bun.sh)) and, to deploy, a Cloudflare account (`bunx wrangler login`). The packages are on npm at 0.4.2 (`create-cf-lite` 0.4.0 had the `npx` bug; 0.4.1 and later fix it); the commands below scaffold *inside a clone* instead
 (`examples/*` is a Bun workspace, so one `bun install` links `cf-lite` and `@cf-lite/*` locally; every `--ui` is covered by `scripts/scaffold-e2e.mjs`):
 
 ```bash
@@ -44,7 +44,7 @@ bun packages/create-cf-lite/index.mjs examples/my-app --ui react --no-install   
 bun install && bun run --filter my-app dev
 ```
 
-From the registry (`create-cf-lite` 0.4.1 or later) the same is `bun create cf-lite my-app -- --ui react && cd my-app && bun install && bun run dev`.
+From the registry (`create-cf-lite` 0.4.1 or later; 0.4.2 is current) the same is `bun create cf-lite my-app -- --ui react && cd my-app && bun install && bun run dev`.
 
 | `--ui` | you write | add to an existing app |
 |---|---|---|
