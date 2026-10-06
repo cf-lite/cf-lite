@@ -14,7 +14,7 @@ Get cf-lite `<ver>` ready so that the owner can publish it with confidence: ever
 cf-lite has no `release/surfaces.json` and no `release check` command: the surfaces are the list in section 4 and the gates are the commands in it.
 
 ## 2. Trigger
-The owner asks for a version to be prepared (and names the number and the reason: what a user can observe). Do not run it to "tidy" without a version. Known open item at the time of writing: `create-cf-lite` 0.4.1 (the `npx` copy-filter bug fix) is set on `main` and waits for the owner to publish it ([published.md](../docs/published.md)).
+The owner asks for a version to be prepared (and names the number and the reason: what a user can observe). Do not run it to "tidy" without a version. Open item at the time of writing: 0.4.2 of all seven packages is carried by this repository and is the first release published from it ([published.md](../docs/published.md)); `create-cf-lite` 0.4.1 (the `npx` copy-filter fix) is already on the registry.
 
 ## 3. Inputs
 | Input | Where it comes from | If missing |

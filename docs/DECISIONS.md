@@ -332,3 +332,16 @@ What was decided about cf-lite, by which role, why, and what in this repository 
 | evidence | The replacement commit's tree id equals the replaced one; `deploy-smoke` dispatch on `main` ended `skipped` (job `smoke` skipped, not failed); `ci` dispatched three times in sequence on `main` ended `success` each (full job about 12.3 minutes each); `auth-e2e` (HTTP 500 once on the first hosted run) did not reproduce in those three runs, no fix is claimed. |
 | status | active |
 | lastChecked | 2026-10-06 by maintainer |
+
+### D-025 The repository is opened public after the clpub6/clpub7b scan; the solid advisory is handled as D-008; no code of conduct
+| field | value |
+|---|---|
+| date | 2026-10-06 |
+| decided by | owner |
+| source | owner brief (task clpub7b, 2026-10-06) |
+| decision | The repository is opened public after the independent scan (clpub6) and the follow-up pass (clpub7b). The `@cf-lite/solid` `seroval` advisory stays handled as in D-008. No `CODE_OF_CONDUCT` and no `CODEOWNERS` file. Issue templates (bug, feature) are added, blank issues stay allowed, and a contact link sends security reports to GitHub private vulnerability reporting. |
+| why | The scan found no leak; the open items were stale npm-status wording and missing community files. |
+| scope | publication, docs, `.github/ISSUE_TEMPLATE` |
+| evidence | `docs/published.md`, `.github/ISSUE_TEMPLATE/config.yml`, D-008 |
+| status | active |
+| lastChecked | 2026-10-06 by maintainer |

@@ -1,6 +1,6 @@
 # Stability and versioning
 
-cf-lite is **0.x** (open source, MIT; packages on npm at 0.4.0, see [published.md](published.md)). This page states the policy the 1.0 release will follow and what holds today. Targets that are not yet enforced by CI are marked *(planned)*.
+cf-lite is **0.x** (open source, MIT; packages on npm at 0.4.0 or later, see [published.md](published.md)). This page states the policy the 1.0 release will follow and what holds today. Targets that are not yet enforced by CI are marked *(planned)*.
 
 ## What is public API
 

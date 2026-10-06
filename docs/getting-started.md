@@ -2,8 +2,8 @@
 
 Short on time? [Quickstart in 10 minutes](#quickstart-in-10-minutes) below; the rest explains what you just made.
 
-From zero to a deployed Worker in about ten minutes. cf-lite is open source (MIT), version 0.x. The packages are on npm at 0.4.0 ([published.md](published.md)), but `create-cf-lite` 0.4.0 has a known bug when run through `npx` / `npm create` (fixed in 0.4.1 on `main`, not yet on the registry at the 2026-10-06 check), so you scaffold from a clone of this
-repository (the commands below); once `create-cf-lite` 0.4.1 is published, `bun create cf-lite` replaces step 1.
+From zero to a deployed Worker in about ten minutes. cf-lite is open source (MIT), version 0.x. Currently on npm: `cf-lite` and the five adapters at 0.4.0, `create-cf-lite` at 0.4.1 (checked 2026-10-06, [published.md](published.md)); this repository carries 0.4.2 of all seven. `create-cf-lite` 0.4.0 had a bug when run through `npx` / `npm create`; 0.4.1 fixes it. The commands below scaffold from a clone of this
+repository; `bun create cf-lite` (0.4.1 or later) replaces step 1.
 
 You need Bun 1.4+ (install: <https://bun.sh>) and, to deploy, a Cloudflare account (`bunx wrangler login`). Local dev needs no account at all: `vite dev` runs your
 code in workerd with local D1/KV/R2/Queues/Durable Objects.

@@ -47,7 +47,7 @@ export function Shell({ current, toc, bare, children }: { current?: string; toc?
         </div>
       )}
       <footer class="foot"><div>
-        cf-lite 0.4 · MIT · pre-release, not on npm yet. This site is built with cf-lite itself (Preact, prerendered, zero client JS on doc pages) and
+        cf-lite 0.4 · MIT · version 0.x, on npm. This site is built with cf-lite itself (Preact, prerendered, zero client JS on doc pages) and
         served from Workers static assets — page views never invoke the Worker.
       </div>
       <div>

@@ -1,6 +1,6 @@
 # Changelog
 
-Derived from git history (`git log`); the project is pre-1.0 (0.x). The seven packages listed in `docs/published.md` are on npm at 0.4.0. Entries under Unreleased describe `main`.
+Derived from git history (`git log`); the project is pre-1.0 (0.x). Of the seven packages in `docs/published.md`, the registry has `create-cf-lite` at 0.4.1 and the other six at 0.4.0 (checked 2026-10-06). Entries under Unreleased describe `main`.
 Versions below are the `version` fields of the packages at the commit noted.
 
 ## 0.4.2 (prepared, not yet published)
@@ -11,6 +11,7 @@ Versions below are the `version` fields of the packages at the commit noted.
 
 ## Unreleased
 
+* **Docs: npm status corrected, issue templates**: README, getting-started and `docs/published.md` state the registry as checked on 2026-10-06 (`create-cf-lite` 0.4.1, the other six at 0.4.0, this repository at 0.4.2); bug and feature issue templates added under `.github/ISSUE_TEMPLATE`.
 * **`deploy-smoke` is off by default**: its job runs only when the repo variable `CF_SMOKE_ENABLED` is `true`, otherwise it is skipped. How to enable it: [deploy.md](docs/deploy.md#deploy-smoke-nightly-ci).
 * **`0.4.2` prepared for all seven published packages (not yet published)**: `repository`, `bugs` and `homepage` now point at `https://github.com/cf-lite/cf-lite`, the docs link written into scaffolds and the toolkit-terms link use the same URL; hosted CI runners only (`ubuntu-latest`). See [published.md](docs/published.md).
 

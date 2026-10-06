@@ -1,6 +1,6 @@
 # Testing cf-lite apps
 
-Two packages (both unpublished until the 1.0 release work; use them from the monorepo / a local tarball for now):
+Two packages (both not published to npm until the 1.0 release work; use them from the monorepo / a local tarball for now):
 
 - **`@cf-lite/testing`** - unit/integration tests that run *inside workerd* via `@cloudflare/vitest-pool-workers`, against your real wrangler bindings.
 - **`@cf-lite/playwright`** - browser e2e fixtures: boot `wrangler dev`, assert *which requests reach the Worker*, axe accessibility checks.
