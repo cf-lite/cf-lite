@@ -319,3 +319,16 @@ What was decided about cf-lite, by which role, why, and what in this repository 
 | evidence | `LICENSE`, `packages/*/package.json`, `scripts/set-repo-url.mjs`, `docs/published.md` |
 | status | active |
 | lastChecked | 2026-10-06 by maintainer |
+
+### D-024 Every commit on `main` carries the maintainers identity; the deploy smoke is off by default
+| field | value |
+|---|---|
+| date | 2026-10-06 |
+| decided by | owner |
+| source | owner instruction (2026-10-06) |
+| decision | Every commit in the history of `cf-lite/cf-lite` has author and committer "cf-lite maintainers". A squash-merge made through the hosting UI stamped the account's profile name, so that commit was replaced by one with the same tree and the maintainers identity, and `main` is changed only by a direct `git push` from a clone configured with that identity (no merge through the web UI or API). The `deploy-smoke` workflow runs only when the repository variable `CF_SMOKE_ENABLED` is `true` (no Cloudflare secret or variable is set); whether a token may live in the CI of a public repository stays the owner's decision. |
+| why | The history must not carry a personal name, and a workflow that fails on every night for missing credentials hides real failures. |
+| scope | publication, CI |
+| evidence | The replacement commit's tree id equals the replaced one; `deploy-smoke` dispatch on `main` ended `skipped` (job `smoke` skipped, not failed); `ci` dispatched three times in sequence on `main` ended `success` each (full job about 12.3 minutes each); `auth-e2e` (HTTP 500 once on the first hosted run) did not reproduce in those three runs, no fix is claimed. |
+| status | active |
+| lastChecked | 2026-10-06 by maintainer |
