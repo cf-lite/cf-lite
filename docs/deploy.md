@@ -49,6 +49,8 @@ Adds `"placement": { "mode": "smart" }` (comments kept; existing placement untou
 
 `.github/workflows/deploy-smoke.yml` (nightly and `workflow_dispatch`, hosted runner) builds `examples/site`, deploys it to workers.dev as `cfl-smoke-<run id>`, checks `/`, `/about/`, `/api/hello` and `/blog/hello` (status codes only), measures the p50 round trip of 30 requests (limit 1500 ms from the runner), then **always** deletes the worker (and confirms the API answers 404) and sweeps any `cfl-smoke-*` worker older than one day. It uses the repo secret `CLOUDFLARE_API_TOKEN` (Workers-scoped) and the variable `CLOUDFLARE_ACCOUNT_ID`. The heavier `perf-budget --live` stays a manual run ([performance-budgets.md](performance-budgets.md)): it re-measures locally too and would deploy a second worker per night.
 
+**Off by default.** The workflow's only job has `if: vars.CF_SMOKE_ENABLED == 'true'`, so without that repo variable every run shows the job as skipped, not failed. To enable it, set the variable `CF_SMOKE_ENABLED` to `true`, the variable `CLOUDFLARE_ACCOUNT_ID` and the secret `CLOUDFLARE_API_TOKEN`. Create the token with the minimum scope (Workers Scripts: Edit on one account) and keep it only as a repo secret. Pull requests from forks never get repository secrets, and this workflow has no pull-request trigger either. Whether a Cloudflare token may live in a public repository's CI is the owner's decision.
+
 ## Not covered / needs a human
 
 Real gradual/preview runs on an account, Action secrets and any production deploy are a human decision. Service-binding typed clients (`server/services`) are the roadmap's stretch item and are not implemented yet.

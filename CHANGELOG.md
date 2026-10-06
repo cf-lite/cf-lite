@@ -11,6 +11,7 @@ Versions below are the `version` fields of the packages at the commit noted.
 
 ## Unreleased
 
+* **`deploy-smoke` is off by default**: its job runs only when the repo variable `CF_SMOKE_ENABLED` is `true`, otherwise it is skipped. How to enable it: [deploy.md](docs/deploy.md#deploy-smoke-nightly-ci).
 * **`0.4.2` prepared for all seven published packages (not yet published)**: `repository`, `bugs` and `homepage` now point at `https://github.com/cf-lite/cf-lite`, the docs link written into scaffolds and the toolkit-terms link use the same URL; hosted CI runners only (`ubuntu-latest`). See [published.md](docs/published.md).
 
 * **Public-launch preparation**: docs, agent briefs and benchmark pages carry neutral product wording only (decisions by role, no personal or tooling names); field notes keep generic technical lessons only ([field notes](docs/field-notes.md)); raw benchmark dumps (`bench/results-live/`) are no longer tracked, reproduction steps in `bench/live/README.md`; `@cf-lite/og-worker` is `private`; every published package lists `LICENSE` in `files`; new `THIRD-PARTY-NOTICES.md`; `docs:check` gains the `public-hygiene` rule (generic detection plus an optional external term list in `CF_HYGIENE_TERMS_FILE`; it prints which mode ran) and `scripts/set-repo-url.mjs` (`--check`); `bun run typecheck` works on a fresh clone after one `bun install`; docs site emits a canonical link only when `VITE_DOCS_URL` is set.

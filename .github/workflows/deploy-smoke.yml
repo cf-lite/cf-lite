@@ -2,6 +2,7 @@
 # check the main routes (status codes only), always delete the worker, then sweep any leftover `cfl-smoke-*` older than 1 day.
 # Hosted runner (nightly + manual only, never on pull requests). Needs repo secret CLOUDFLARE_API_TOKEN
 # (Workers Scripts: Edit, main account) and repo variable CLOUDFLARE_ACCOUNT_ID (not a secret). Fork PRs never trigger this (no PR trigger).
+# Off by default: the job is skipped unless repo variable CF_SMOKE_ENABLED is 'true'.
 # Doc: docs/deploy.md ("Deploy smoke"). Nothing here prints the token or any URL with a query string.
 name: deploy-smoke
 on:
@@ -15,6 +16,7 @@ permissions:
   contents: read
 jobs:
   smoke:
+    if: vars.CF_SMOKE_ENABLED == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
