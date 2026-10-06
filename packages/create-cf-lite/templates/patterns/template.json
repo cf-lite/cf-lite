@@ -1,0 +1,1 @@
+{ "description": "Pattern library: app/patterns/{atoms,molecules,organisms}, *.states.ts, /__preview, mocks/, `cfl export`, @/ and @patterns/ aliases", "ui": "react", "add": ["patterns"] }

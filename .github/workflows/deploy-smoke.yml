@@ -1,0 +1,94 @@
+# Nightly deploy smoke: build the quickstart example (examples/site), deploy it to workers.dev as `cfl-smoke-<run id>`,
+# check the main routes (status codes only), always delete the worker, then sweep any leftover `cfl-smoke-*` older than 1 day.
+# Hosted runner (nightly + manual only, never on pull requests). Needs repo secret CLOUDFLARE_API_TOKEN
+# (Workers Scripts: Edit, main account) and repo variable CLOUDFLARE_ACCOUNT_ID (not a secret). Fork PRs never trigger this (no PR trigger).
+# Doc: docs/deploy.md ("Deploy smoke"). Nothing here prints the token or any URL with a query string.
+name: deploy-smoke
+on:
+  schedule:
+    - cron: "41 2 * * *"
+  workflow_dispatch:
+concurrency:
+  group: deploy-smoke
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      WORKER_NAME: cfl-smoke-${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: refuse to run without credentials
+        run: |
+          [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || { echo "CLOUDFLARE_API_TOKEN secret and CLOUDFLARE_ACCOUNT_ID variable are required"; exit 1; }
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2
+        with:
+          bun-version: 1.4.0
+      - run: bun install --frozen-lockfile
+      - run: bun run build && bun install --frozen-lockfile
+      - name: build the quickstart example
+        working-directory: examples/site
+        run: bunx cf-lite build
+      - name: deploy
+        id: deploy
+        working-directory: examples/site
+        env:
+          CI: "1"
+        run: |
+          set -euo pipefail
+          bunx wrangler deploy --name "$WORKER_NAME" 2>&1 | tee "$RUNNER_TEMP/deploy.log"
+          url=$(grep -oE 'https://[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev' "$RUNNER_TEMP/deploy.log" | head -1)
+          [ -n "$url" ] || { echo "no workers.dev URL in the deploy output"; exit 1; }
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: check routes (status codes only)
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          set -euo pipefail
+          code() { curl -s -o /dev/null -m 20 -w '%{http_code}' "$URL$1" || true; }
+          fail=0
+          for spec in "/ 200" "/about/ 200" "/api/hello 200" "/blog/hello 200"; do
+            set -- $spec; got=000
+            for i in 1 2 3 4 5 6 7 8 9 10; do got=$(code "$1"); [ "$got" = "$2" ] && break; sleep 3; done   # workers.dev can lag a few seconds after deploy
+            echo "$1 -> $got (want $2)"; [ "$got" = "$2" ] || fail=1
+          done
+          [ "$fail" = 0 ]
+      - name: round-trip budget on the deployed worker
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          set -euo pipefail
+          # 30 sequential GETs of "/": the p50 round trip from the runner must stay under 1500 ms (generous: it includes TLS and the runner's network).
+          bun -e '
+            const u = process.env.URL + "/", lat = [];
+            for (let i = 0; i < 30; i++) { const t = performance.now(); await (await fetch(u)).arrayBuffer(); lat.push(performance.now() - t); }
+            lat.sort((a, b) => a - b); const p50 = lat[14], p95 = lat[28];
+            console.log(`rtt p50 ${p50.toFixed(0)} ms, p95 ${p95.toFixed(0)} ms (limit p50 1500)`);
+            if (p50 > 1500) process.exit(1);'
+      - name: delete the worker (always)
+        if: always()
+        working-directory: examples/site
+        env:
+          CI: "1"
+        run: |
+          bunx wrangler delete --name "$WORKER_NAME" --force || true
+          st=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/$WORKER_NAME")
+          echo "api status for $WORKER_NAME after delete: $st (404 = gone)"
+          [ "$st" = "404" ]
+      - name: sweep stale cfl-smoke-* workers (older than 1 day)
+        if: always()
+        run: |
+          bun -e '
+            const base = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/workers/scripts`;
+            const h = { authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}` };
+            const list = await (await fetch(base, { headers: h })).json();
+            if (!list.success) { console.log("list failed, status only; skipping sweep"); process.exit(1); }
+            const cutoff = Date.now() - 24 * 3600 * 1000;
+            const stale = list.result.filter((s) => /^cfl-smoke-/.test(s.id) && Date.parse(s.created_on) < cutoff);
+            console.log(`cfl-smoke-* total ${list.result.filter((s) => /^cfl-smoke-/.test(s.id)).length}, stale ${stale.length}`);
+            for (const s of stale) { const r = await fetch(`${base}/${s.id}?force=true`, { method: "DELETE", headers: h }); console.log(`delete ${s.id}: ${r.status}`); }'

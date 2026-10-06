@@ -1,0 +1,90 @@
+{
+  "name": "@cf-lite/svelte",
+  "version": "0.4.2",
+  "description": "Svelte 5 adapter for cf-lite (render() SSR, hydrate, HMR)",
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "vite",
+    "hono",
+    "ssr",
+    "static-assets",
+    "svelte",
+    "cf-lite"
+  ],
+  "homepage": "https://github.com/cf-lite/cf-lite#readme",
+  "bugs": {
+    "url": "https://github.com/cf-lite/cf-lite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cf-lite/cf-lite.git",
+    "directory": "packages/svelte"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "sideEffects": [
+    "*.svelte"
+  ],
+  "files": [
+    "dist",
+    "lib",
+    "env.d.ts",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "default": "./dist/server.js"
+    },
+    "./scaffold": {
+      "types": "./dist/scaffold.d.ts",
+      "default": "./dist/scaffold.js"
+    },
+    "./Link.svelte": {
+      "svelte": "./lib/Link.svelte",
+      "default": "./lib/Link.svelte"
+    },
+    "./Image.svelte": {
+      "svelte": "./lib/Image.svelte",
+      "default": "./lib/Image.svelte"
+    },
+    "./env": {
+      "types": "./env.d.ts"
+    },
+    "./form": {
+      "types": "./dist/form.d.ts",
+      "default": "./dist/form.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "svelte": "./lib/Root.svelte",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1"
+  },
+  "peerDependencies": {
+    "cf-lite": "^0.4.0",
+    "svelte": "^5.46.4",
+    "vite": "^8.0.0"
+  },
+  "devDependencies": {
+    "svelte": "^5.57.1",
+    "vite": "^8.3.1"
+  }
+}

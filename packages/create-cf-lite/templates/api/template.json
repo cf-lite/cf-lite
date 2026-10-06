@@ -1,0 +1,1 @@
+{ "description": "JSON API: typed Hono RPC client, rate limiting, HMAC-verified webhook endpoint", "ui": "none", "add": [] }

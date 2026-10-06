@@ -1,0 +1,151 @@
+{
+ "n": 300,
+ "rows": [
+  {
+   "target": "cf-lite render=ssr",
+   "ms": 0,
+   "bytes": 977,
+   "ttfb_p50": 18.11,
+   "ttfb_p95": 19.69,
+   "total_p50": 18.75,
+   "total_p95": 20.31,
+   "cpu_ms_p50": 4.4,
+   "cpu_ms_p95": 4.4,
+   "cpu_ms_mean": 4.33
+  },
+  {
+   "target": "cf-lite render=rsc",
+   "ms": 0,
+   "bytes": 4836,
+   "ttfb_p50": 22.48,
+   "ttfb_p95": 25.78,
+   "total_p50": 25.85,
+   "total_p95": 29.18,
+   "cpu_ms_p50": 7.2,
+   "cpu_ms_p95": 7.4,
+   "cpu_ms_mean": 7.13
+  },
+  {
+   "target": "vinext (RSC)",
+   "ms": 0,
+   "bytes": 7093,
+   "ttfb_p50": 30.5,
+   "ttfb_p95": 34.19,
+   "total_p50": 33.65,
+   "total_p95": 37.09,
+   "cpu_ms_p50": 14.8,
+   "cpu_ms_p95": 16.6,
+   "cpu_ms_mean": 14.6
+  },
+  {
+   "target": "cf-lite render=ssr",
+   "ms": 150,
+   "bytes": 981,
+   "ttfb_p50": 176.41,
+   "ttfb_p95": 178.56,
+   "total_p50": 177.08,
+   "total_p95": 179.15,
+   "cpu_ms_p50": 5.6,
+   "cpu_ms_p95": 5.6,
+   "cpu_ms_mean": 5.33
+  },
+  {
+   "target": "cf-lite render=rsc",
+   "ms": 150,
+   "bytes": 4840,
+   "ttfb_p50": 37.11,
+   "ttfb_p95": 40.02,
+   "total_p50": 186.72,
+   "total_p95": 189.66,
+   "cpu_ms_p50": 8.4,
+   "cpu_ms_p95": 8.6,
+   "cpu_ms_mean": 8.17
+  },
+  {
+   "target": "vinext (RSC)",
+   "ms": 150,
+   "bytes": 7250,
+   "ttfb_p50": 27.07,
+   "ttfb_p95": 30.69,
+   "total_p50": 182.79,
+   "total_p95": 186.14,
+   "cpu_ms_p50": 14.8,
+   "cpu_ms_p95": 16.4,
+   "cpu_ms_mean": 14.93
+  },
+  {
+   "target": "cf-lite render=ssr",
+   "ms": 400,
+   "bytes": 981,
+   "ttfb_p50": 427.16,
+   "ttfb_p95": 429.87,
+   "total_p50": 427.9,
+   "total_p95": 430.69,
+   "cpu_ms_p50": 6.2,
+   "cpu_ms_p95": 6.8,
+   "cpu_ms_mean": 6.1
+  },
+  {
+   "target": "cf-lite render=rsc",
+   "ms": 400,
+   "bytes": 4840,
+   "ttfb_p50": 37.34,
+   "ttfb_p95": 40.02,
+   "total_p50": 437.13,
+   "total_p95": 439.55,
+   "cpu_ms_p50": 8.4,
+   "cpu_ms_p95": 8.8,
+   "cpu_ms_mean": 8.4
+  },
+  {
+   "target": "vinext (RSC)",
+   "ms": 400,
+   "bytes": 7250,
+   "ttfb_p50": 27.93,
+   "ttfb_p95": 30.79,
+   "total_p50": 433.68,
+   "total_p95": 436.66,
+   "cpu_ms_p50": 14.8,
+   "cpu_ms_p95": 19.4,
+   "cpu_ms_mean": 15.73
+  }
+ ],
+ "clientJs": {
+  "cf-lite render=ssr": {
+   "externalFiles": 3,
+   "externalRaw": 228716,
+   "externalGzip": 71461,
+   "inlineRaw": 87,
+   "inlineGzip": 101,
+   "htmlBytes": 974
+  },
+  "cf-lite render=rsc": {
+   "externalFiles": 8,
+   "externalRaw": 248364,
+   "externalGzip": 78560,
+   "inlineRaw": 3090,
+   "inlineGzip": 1194,
+   "htmlBytes": 4820
+  },
+  "vinext (RSC)": {
+   "externalFiles": 6,
+   "externalRaw": 446823,
+   "externalGzip": 135265,
+   "inlineRaw": 5637,
+   "inlineGzip": 2198,
+   "htmlBytes": 7089
+  }
+ },
+ "worker": {
+  "cf-lite app (ssr+rsc routes, whole Worker incl. rsc env)": {
+   "files": 34,
+   "raw": 412009,
+   "gzip": 133347
+  },
+  "vinext": {
+   "files": 67,
+   "raw": 892731,
+   "gzip": 286925
+  }
+ }
+}

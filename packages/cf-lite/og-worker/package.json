@@ -1,0 +1,13 @@
+{
+  "name": "@cf-lite/og-worker",
+  "version": "0.4.2",
+  "description": "The Open Graph image renderer Worker for cf-lite (satori + resvg-wasm). Deployed separately and bound to the app as a service binding so the wasm never enters the app Worker.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "files": ["src", "wrangler.jsonc"],
+  "scripts": { "dev": "wrangler dev", "deploy": "wrangler deploy" },
+  "dependencies": { "@resvg/resvg-wasm": "^2.6.2", "satori": "^0.33.5" },
+  "devDependencies": { "@cloudflare/workers-types": "^5.20260930.1", "wrangler": "^4.144.0" }
+}

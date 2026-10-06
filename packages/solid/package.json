@@ -1,0 +1,78 @@
+{
+  "name": "@cf-lite/solid",
+  "version": "0.4.2",
+  "description": "Solid adapter for cf-lite (renderToStream SSR, hydration, vite-plugin-solid HMR)",
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "vite",
+    "hono",
+    "ssr",
+    "static-assets",
+    "solid",
+    "cf-lite"
+  ],
+  "homepage": "https://github.com/cf-lite/cf-lite#readme",
+  "bugs": {
+    "url": "https://github.com/cf-lite/cf-lite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cf-lite/cf-lite.git",
+    "directory": "packages/solid"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "default": "./dist/server.js"
+    },
+    "./image": {
+      "types": "./dist/image.d.ts",
+      "default": "./dist/image.js"
+    },
+    "./scaffold": {
+      "types": "./dist/scaffold.d.ts",
+      "default": "./dist/scaffold.js"
+    },
+    "./form": {
+      "types": "./dist/form.d.ts",
+      "default": "./dist/form.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "vite-plugin-solid": "^2.11.14"
+  },
+  "peerDependencies": {
+    "cf-lite": "^0.4.0",
+    "solid-js": "^1.9.15",
+    "vite": "^8.0.0"
+  },
+  "devDependencies": {
+    "solid-js": "^1.9.15",
+    "vite": "^8.3.1"
+  }
+}

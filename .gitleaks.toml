@@ -1,0 +1,9 @@
+title = "cf-lite"
+[extend]
+useDefault = true
+[allowlist]
+description = "Synthetic test fixtures (fake values)"
+paths = [
+  '''packages/cf-lite/test/fixtures/optimizely-graph-webhook\.json''',
+  '''packages/cf-lite/test/ask-provider\.test\.ts''',
+]

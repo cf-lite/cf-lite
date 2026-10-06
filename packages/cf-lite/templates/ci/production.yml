@@ -1,0 +1,26 @@
+# cf-lite production deploy on push to main, gated by a GitHub Environment named "production" with required reviewers
+# (Settings -> Environments -> production -> Required reviewers). The job pauses until a human approves.
+# Gradual: 10% -> 50% -> 100% with a /_health probe at each partial step; automatic rollback when it fails.
+name: production
+on:
+  push:
+    branches: [main]
+concurrency:
+  group: production
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with: { bun-version: 1.4.0 }
+      - run: bun install --frozen-lockfile
+      - run: bun run --if-present test
+      - run: bunx cf-lite deploy --gradual 10,50,100 --health-url "${{ vars.HEALTH_URL }}" --soak 60 --message "${{ github.sha }}"

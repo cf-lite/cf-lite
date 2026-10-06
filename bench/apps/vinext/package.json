@@ -1,0 +1,6 @@
+{
+  "name": "bench-vinext", "private": true, "type": "module",
+  "scripts": { "build": "vite build" },
+  "dependencies": { "@vinext/cloudflare": "^1.0.0", "react": "^19.3.0", "react-dom": "^19.3.0", "react-server-dom-webpack": "^19.3.0", "vinext": "^1.0.0" },
+  "devDependencies": { "@cloudflare/vite-plugin": "2.0.0-beta.sha-ad79608dd", "@vitejs/plugin-react": "^6.1.1", "@vitejs/plugin-rsc": "^0.5.35", "cf": "1.0.0-beta.5", "vite": "^8.3.0", "wrangler": "^4.144.0", "@types/react": "^19.0.0" }
+}

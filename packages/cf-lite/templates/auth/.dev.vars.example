@@ -1,0 +1,9 @@
+# cp .dev.vars.example .dev.vars   (gitignored; production: `wrangler secret put <NAME>`)
+SESSION_SECRETS=change-me-to-32+random-chars-openssl-rand-base64-32
+OAUTH_CLIENT_ID=
+OAUTH_CLIENT_SECRET=
+# AUTH_PROVIDER=github
+# Turnstile on the login form (cf-lite add auth; --no-turnstile to drop). These are Cloudflare's always-pass TEST keys;
+# production: real keys from the dashboard, secret via `wrangler secret put TURNSTILE_SECRET`, site key in wrangler "vars".
+TURNSTILE_SITE_KEY=1x00000000000000000000AA
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA

@@ -1,0 +1,19 @@
+{
+  "workerFirst": [
+    "/api-proxy",
+    "/api-proxy/*",
+    "/app",
+    "/eu",
+    "/eu/*",
+    "/legacy/*",
+    "/m/*"
+  ],
+  "report": {
+    "staticRedirects": 2,
+    "dynamicRedirects": 2,
+    "headerRules": 2,
+    "workerRedirects": 2,
+    "rewrites": 2,
+    "workerHeaders": 1
+  }
+}

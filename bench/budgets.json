@@ -1,0 +1,65 @@
+{
+  "_doc": "Local-workerd perf baselines; regenerate with `node scripts/perf-budget.mjs --update` on an otherwise idle machine. Gate fails when measured > baseline*(1+pct/100)+abs (docs/performance-budgets.md).",
+  "measuredOn": {
+    "node": "v24.20.0",
+    "wrangler": "4.144.0",
+    "cpus": 16,
+    "date": "2026-10-02"
+  },
+  "rules": {
+    "buildSeconds": {
+      "pct": 60,
+      "abs": 3
+    },
+    "coldStartMs": {
+      "pct": 100,
+      "abs": 800
+    },
+    "p50Ms": {
+      "pct": 60,
+      "abs": 0.5
+    },
+    "workerGzipBytes": {
+      "pct": 5,
+      "abs": 256
+    }
+  },
+  "examples": {
+    "demo": {
+      "buildSeconds": 2.62,
+      "coldStartMs": 2067,
+      "p50Ms": 6.088,
+      "workerGzipBytes": 82156
+    },
+    "site": {
+      "buildSeconds": 2.64,
+      "coldStartMs": 2125,
+      "p50Ms": 6.231,
+      "workerGzipBytes": 78762
+    },
+    "site-preact": {
+      "buildSeconds": 2.78,
+      "coldStartMs": 2045,
+      "p50Ms": 5.973,
+      "workerGzipBytes": 21868
+    },
+    "site-forms": {
+      "buildSeconds": 2.15,
+      "coldStartMs": 2245,
+      "p50Ms": 6.138,
+      "workerGzipBytes": 84853
+    },
+    "site-isr": {
+      "buildSeconds": 2.03,
+      "coldStartMs": 2085,
+      "p50Ms": 5.848,
+      "workerGzipBytes": 12331
+    },
+    "site-islands": {
+      "buildSeconds": 2.57,
+      "coldStartMs": 2107,
+      "p50Ms": 6.081,
+      "workerGzipBytes": 80614
+    }
+  }
+}

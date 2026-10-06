@@ -1,0 +1,8 @@
+{
+  "name": "cf-lite-site-forms",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": { "run_worker_first": ["/api/*"] },
+  "kv_namespaces": [{ "binding": "CF_CACHE_TAGS" }],
+  "r2_buckets": [{ "binding": "FILES", "bucket_name": "site-forms-files" }]
+}

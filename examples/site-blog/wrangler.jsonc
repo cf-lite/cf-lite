@@ -1,0 +1,9 @@
+{
+  "name": "cf-lite-site-blog",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": { "binding": "ASSETS", "not_found_handling": "single-page-application" },
+  // The OG renderer (packages/cf-lite/og-worker, deployed as `cf-lite-og`); the wasm lives there, never in this Worker.
+  "services": [{ "binding": "OG", "service": "cf-lite-og" }],
+  "vars": { "SITE_URL": "https://blog.example.com" }
+}

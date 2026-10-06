@@ -1,0 +1,39 @@
+{
+  "name": "create-cf-lite",
+  "version": "0.4.2",
+  "description": "npm create cf-lite my-app",
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "vite",
+    "hono",
+    "ssr",
+    "static-assets"
+  ],
+  "homepage": "https://github.com/cf-lite/cf-lite#readme",
+  "bugs": {
+    "url": "https://github.com/cf-lite/cf-lite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cf-lite/cf-lite.git",
+    "directory": "packages/create-cf-lite"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "bin": {
+    "create-cf-lite": "./index.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "template",
+    "templates",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "cf-lite": "^0.4.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "cf-lite-app",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": { "binding": "ASSETS", "not_found_handling": "single-page-application" },
+  "observability": { "enabled": true },
+  // Canonical origin for seo()/sitemap. OG images: add a `services` binding to the cf-lite-og Worker (see docs/metadata.md).
+  "vars": { "SITE_URL": "https://blog.example.com" }
+}

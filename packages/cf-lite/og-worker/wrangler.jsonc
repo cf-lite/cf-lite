@@ -1,0 +1,9 @@
+{
+  "name": "cf-lite-og",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  // No routes / workers_dev: this Worker is reached only through the app's `OG` service binding.
+  "workers_dev": false,
+  // satori imports `harfbuzzjs`, whose stock loader compiles wasm at runtime (forbidden in Workers): swap in a loader that uses the bundled module.
+  "alias": { "harfbuzzjs": "./src/harfbuzz.ts" }
+}

@@ -1,0 +1,14 @@
+# Justified exceptions to the public-hygiene rule (scripts/public-hygiene-lib.mjs). Format: <path glob> | <rule id> | <reason>
+# Rule ids: the ids in RULES, `term` (the optional external list), or `*`.
+LICENSE | term | the copyright holder's name
+packages/*/LICENSE | term | the copyright holder's name
+packages/cf-lite/src/vite-fonts.ts | local-host | `.local` is a property access on a local variable, not a host
+packages/cf-lite/src/vite-islands.ts | local-host | same: a property access on a local variable
+packages/cf-lite/src/vite-strip.ts | local-host | same: a property access on a local variable
+packages/cf-lite/test/agent-docs.test.ts | private-network | synthetic address that proves the deny rule fires
+packages/cf-lite/test/images.test.ts | private-network | SSRF test corpus: private addresses that must be refused
+packages/cf-lite/test/llm.test.ts | local-host | `.local` is a property access (`env.local`), not a host
+packages/cf-lite/test/sec-runtime.test.ts | local-host | SSRF test corpus: internal host names that must be refused
+packages/cf-lite/test/sec-runtime.test.ts | private-network | SSRF test corpus: private addresses that must be refused
+packages/cf-lite/test/storage.test.ts | secret-shape | the public example access key from the provider's documentation
+packages/react/src/detect.ts | local-host | `.local` is a property access on a local variable, not a host

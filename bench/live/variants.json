@@ -1,0 +1,6 @@
+{
+  "cflite": {"host": "bench-cflite.ACCOUNT.workers.dev", "redirect": "/go/github", "api": "/api/hello", "content": "/about/"},
+  "vinext": {"host": "bench-vinext.ACCOUNT.workers.dev", "redirect": "/go/github", "api": "/api/hello", "content": "/about"},
+  "next":   {"host": "bench-next.ACCOUNT.workers.dev",   "redirect": "/go/github", "api": "/api/hello", "content": "/about"},
+  "bare":   {"host": "bench-bare.ACCOUNT.workers.dev",   "redirect": "/go/github", "api": "/api/hello", "content": "/about"}
+}

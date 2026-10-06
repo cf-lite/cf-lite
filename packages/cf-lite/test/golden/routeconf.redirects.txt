@@ -1,0 +1,4 @@
+/old /new 301
+/blog/:slug /posts/:slug 301
+/docs /guide 308
+/docs/* /guide/:splat 308

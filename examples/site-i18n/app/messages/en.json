@@ -1,0 +1,6 @@
+{
+  "nav": { "home": "Home", "about": "About" },
+  "home": { "title": "Hello", "greeting": "Welcome, {name}!", "items": { "one": "{count} item", "other": "{count} items" } },
+  "about": { "title": "About us", "note": "This note only exists in English." },
+  "post": { "title": "Post: {slug}" }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "cf-lite-realtime",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": { "binding": "ASSETS", "run_worker_first": ["/api/*"] },
+  "observability": { "enabled": true },
+  // What `cf-lite add do chat` writes; the checks printed at dev/build start diff it against server/do/**.
+  "durable_objects": { "bindings": [{ "name": "CHAT", "class_name": "Chat" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Chat"] }]
+}

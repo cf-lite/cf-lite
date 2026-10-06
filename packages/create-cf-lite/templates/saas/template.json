@@ -1,0 +1,1 @@
+{ "description": "Accounts + sessions (OAuth, D1), a queue for background work, protected API", "ui": "preact", "add": ["auth", "queue emails"] }

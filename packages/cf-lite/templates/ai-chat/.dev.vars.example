@@ -1,0 +1,2 @@
+# Optional: route Workers AI through AI Gateway (create the gateway in the dashboard first).
+# AI_GATEWAY_ID=my-gateway

@@ -1,0 +1,41 @@
+{
+  "name": "@cf-lite/testing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Test helpers for cf-lite apps: vitest-pool-workers preset, testApp, fake queues/workflows, cron + login helpers.",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "default": "./dist/config.js"
+    },
+    "./setup": {
+      "types": "./dist/setup.d.ts",
+      "default": "./dist/setup.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "bun run build && cd fixture && vitest run"
+  },
+  "peerDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.22.0",
+    "vitest": "^4.1.0"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.22.0",
+    "@cloudflare/workers-types": "^5.20260930.1",
+    "@types/node": "^24.0.0",
+    "vitest": "^4.1.0",
+    "hono": "^4.13.11",
+    "cf-lite": "*"
+  }
+}

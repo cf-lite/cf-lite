@@ -1,0 +1,7 @@
+{
+  "name": "cf-lite-docs",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "assets": { "not_found_handling": "404-page", "run_worker_first": ["/api/*"] }
+}

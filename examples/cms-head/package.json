@@ -1,0 +1,27 @@
+{
+  "name": "cf-lite-cms-head",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "dev": "cf-lite dev",
+    "build": "cf-lite build",
+    "deploy": "cf-lite deploy",
+    "typecheck": "cf-lite prepare && tsc --noEmit"
+  },
+  "dependencies": {
+    "@cf-lite/react": "*",
+    "cf-lite": "*",
+    "hono": "^4.13.11",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260930.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.1",
+    "wrangler": "^4.144.0"
+  }
+}

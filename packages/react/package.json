@@ -1,0 +1,94 @@
+{
+  "name": "@cf-lite/react",
+  "version": "0.4.2",
+  "description": "React adapter for cf-lite",
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "vite",
+    "hono",
+    "ssr",
+    "static-assets",
+    "react",
+    "cf-lite"
+  ],
+  "homepage": "https://github.com/cf-lite/cf-lite#readme",
+  "bugs": {
+    "url": "https://github.com/cf-lite/cf-lite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cf-lite/cf-lite.git",
+    "directory": "packages/react"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "default": "./dist/server.js"
+    },
+    "./image": {
+      "types": "./dist/image.d.ts",
+      "default": "./dist/image.js"
+    },
+    "./scaffold": {
+      "types": "./dist/scaffold.d.ts",
+      "default": "./dist/scaffold.js"
+    },
+    "./form": {
+      "types": "./dist/form.d.ts",
+      "default": "./dist/form.js"
+    },
+    "./detect": {
+      "types": "./dist/detect.d.ts",
+      "default": "./dist/detect.js"
+    },
+    "./islands": {
+      "types": "./dist/islands.d.ts",
+      "default": "./dist/islands.js"
+    },
+    "./islands-client": {
+      "types": "./dist/islands-client.d.ts",
+      "default": "./dist/islands-client.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^6.1.1"
+  },
+  "peerDependencies": {
+    "cf-lite": "^0.4.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "vite": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "vite": "^8.3.1"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "app": "vinext",
+  "node": "v24.21.0",
+  "cpus": 8,
+  "cpuModel": "Intel(R) Xeon(R) CPU E5-2696 v4 @ 2.20GHz",
+  "date": "2026-09-30T05:05:48.679Z",
+  "notes": [],
+  "installSeconds": 20.357,
+  "buildSeconds": [
+    7.156,
+    6.752,
+    6.73
+  ],
+  "buildMedianSeconds": 6.752,
+  "worker": {
+    "files": 72,
+    "raw": 890549,
+    "gzip": 287634
+  },
+  "assetsDir": ".cloudflare/output/v0/workers/default/assets",
+  "staticAssets": {
+    "files": 11,
+    "raw": 448565,
+    "gzip": 135793
+  },
+  "contentPage": {
+    "htmlBytes": 5366,
+    "htmlGzip": 1914,
+    "jsFiles": 5,
+    "jsGzip": 134956,
+    "jsRaw": 446642,
+    "inlineScripts": 3,
+    "inlineScriptBytes": 4276,
+    "totalJsGzip": 136523
+  },
+  "latencyMs": {
+    "redirect": {
+      "status": 307,
+      "p50": 19.448,
+      "p95": 24.236,
+      "p99": 34.242,
+      "rpsC16": 57
+    },
+    "api": {
+      "status": 200,
+      "p50": 19.451,
+      "p95": 21.775,
+      "p99": 38.489,
+      "rpsC16": 37
+    },
+    "content": {
+      "status": 200,
+      "p50": 19.481,
+      "p95": 21.856,
+      "p99": 40.292,
+      "rpsC16": 38
+    }
+  },
+  "requests": 3000
+}

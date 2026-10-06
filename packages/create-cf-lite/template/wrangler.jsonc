@@ -1,0 +1,12 @@
+{
+  "name": "cf-lite-app",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  // Workers Logs: structured JSON from cf-lite/modules/log is indexed per field. Lower head_sampling_rate on busy apps.
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "assets": {
+    "not_found_handling": "single-page-application",
+    // Only these run the Worker. cf-lite appends SSR route globs automatically.
+    "run_worker_first": ["/api/*"]
+  }
+}

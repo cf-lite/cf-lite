@@ -1,0 +1,24 @@
+{
+  "name": "cf-lite-site-draft",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cf-lite dev",
+    "build": "cf-lite build",
+    "deploy": "cf-lite deploy",
+    "typecheck": "cf-lite prepare && tsc --noEmit"
+  },
+  "dependencies": {
+    "@cf-lite/preact": "*",
+    "cf-lite": "*",
+    "hono": "^4.13.11",
+    "preact": "^10.29.0",
+    "preact-render-to-string": "^6.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260930.1",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.1",
+    "wrangler": "^4.144.0"
+  }
+}

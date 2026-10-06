@@ -1,0 +1,6 @@
+{
+  "nav": { "home": "Trang chủ", "about": "Giới thiệu" },
+  "home": { "title": "Xin chào", "greeting": "Chào mừng, {name}!", "items": { "other": "{count} mục" } },
+  "about": { "title": "Về chúng tôi" },
+  "post": { "title": "Bài viết: {slug}" }
+}

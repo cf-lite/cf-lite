@@ -1,0 +1,4 @@
+:root { --accent: #2563eb; font-family: system-ui, sans-serif; }
+.btn { font: inherit; padding: .4rem .9rem; border-radius: .4rem; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+.btn--ghost { background: transparent; color: var(--accent); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }

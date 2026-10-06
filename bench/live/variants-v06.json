@@ -1,0 +1,7 @@
+{
+  "bare":   {"host": "bench-bare.ACCOUNT.workers.dev",       "redirect": "/go/github", "api": "/api/hello", "content": "/about"},
+  "cflite": {"host": "bench-cflite.ACCOUNT.workers.dev",     "redirect": "/go/github", "api": "/api/hello", "content": "/about/"},
+  "full":   {"host": "bench-cflite-full.ACCOUNT.workers.dev", "redirect": "/go/github", "api": "/api/hello", "content": "/about/", "session": "/api/visit"},
+  "vinext": {"host": "bench-vinext.ACCOUNT.workers.dev",     "redirect": "/go/github", "api": "/api/hello", "content": "/about"},
+  "next":   {"host": "bench-next.ACCOUNT.workers.dev",       "redirect": "/go/github", "api": "/api/hello", "content": "/about"}
+}

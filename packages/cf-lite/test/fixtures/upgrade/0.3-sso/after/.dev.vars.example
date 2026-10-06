@@ -1,0 +1,5 @@
+FOO=1
+# cf-lite 0.4: modules/sso has no built-in issuer/keys any more; a missing value fails closed (401)
+SSO_ISSUER=
+SSO_PUBLIC_KEYS=
+# optional: SSO_AUDIENCE, SSO_COOKIE_NAME, SSO_AUTH_ORIGIN, SSO_REFRESH_AFTER_S

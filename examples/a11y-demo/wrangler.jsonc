@@ -1,0 +1,6 @@
+{
+  "name": "cf-lite-a11y-demo",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": { "not_found_handling": "single-page-application" }
+}

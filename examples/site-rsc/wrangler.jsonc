@@ -1,0 +1,9 @@
+{
+  "name": "cf-lite-site-rsc",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": { "GREETING": "hello-env", "CACHE_PURGE_TOKEN": "e2e-purge-token" },
+  "kv_namespaces": [{ "binding": "CF_CACHE_TAGS", "id": "rsc-e2e-tags" }],
+  "assets": { "not_found_handling": "single-page-application", "run_worker_first": ["/api/*"] }
+}

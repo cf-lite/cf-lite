@@ -1,0 +1,27 @@
+{
+  "name": "cf-lite-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gen": "bun scripts/gen.mjs",
+    "dev": "bun run gen && cf-lite dev",
+    "build": "bun run gen && cf-lite build",
+    "deploy": "bun run gen && cf-lite deploy",
+    "typecheck": "bun run gen && cf-lite prepare && tsc --noEmit"
+  },
+  "dependencies": {
+    "@cf-lite/preact": "*",
+    "cf-lite": "*",
+    "hono": "^4.13.11",
+    "preact": "^10.29.0",
+    "preact-render-to-string": "^6.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260930.1",
+    "markdown-it": "^14.1.0",
+    "shiki": "^3.0.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.1",
+    "wrangler": "^4.144.0"
+  }
+}

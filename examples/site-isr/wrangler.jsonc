@@ -1,0 +1,14 @@
+{
+  "name": "cf-lite-site-isr",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": { "binding": "ASSETS", "run_worker_first": ["/api/*"] },
+  "observability": { "enabled": true },
+  // R2 holds the regenerated HTML (`_isr/...`); the queue carries regeneration requests; KV is the demo's "content database".
+  "r2_buckets": [{ "binding": "ISR_BUCKET", "bucket_name": "cf-lite-site-isr" }],
+  "kv_namespaces": [{ "binding": "CONTENT" }],
+  "queues": {
+    "producers": [{ "binding": "ISR_QUEUE", "queue": "isr" }],
+    "consumers": [{ "queue": "isr", "max_batch_size": 10, "max_batch_timeout": 1, "max_retries": 3 }]
+  }
+}

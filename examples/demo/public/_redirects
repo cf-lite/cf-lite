@@ -1,0 +1,3 @@
+# Static redirects: handled by Workers static assets — the Worker is never invoked.
+/go/example  https://example.com/  302
+/old-about  /about  301

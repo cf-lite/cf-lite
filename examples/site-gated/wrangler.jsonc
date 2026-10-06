@@ -1,0 +1,12 @@
+{
+  "name": "cf-lite-site-gated",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    // ASSETS lets the Worker serve a static file itself once the gate has let the request through.
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    // cf-lite appends the globs compiled from server/middleware.ts's `config.matcher` - nothing else needed here.
+    "run_worker_first": ["/api/*"]
+  }
+}

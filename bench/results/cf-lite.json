@@ -1,0 +1,60 @@
+{
+  "app": "cf-lite",
+  "node": "v24.21.0",
+  "cpus": 8,
+  "cpuModel": "Intel(R) Xeon(R) CPU E5-2696 v4 @ 2.20GHz",
+  "date": "2026-09-30T04:59:31.439Z",
+  "notes": [],
+  "installSeconds": 11.809,
+  "buildSeconds": [
+    4.229,
+    4.128,
+    4.32
+  ],
+  "buildMedianSeconds": 4.229,
+  "worker": {
+    "files": 1,
+    "raw": 56228,
+    "gzip": 15306
+  },
+  "assetsDir": "dist/client",
+  "staticAssets": {
+    "files": 9,
+    "raw": 226148,
+    "gzip": 70964
+  },
+  "contentPage": {
+    "htmlBytes": 279,
+    "htmlGzip": 214,
+    "jsFiles": 0,
+    "jsGzip": 0,
+    "jsRaw": 0,
+    "inlineScripts": 0,
+    "inlineScriptBytes": 0,
+    "totalJsGzip": 20
+  },
+  "latencyMs": {
+    "redirect": {
+      "status": 302,
+      "p50": 3.357,
+      "p95": 4.507,
+      "p99": 8.436,
+      "rpsC16": 471
+    },
+    "api": {
+      "status": 200,
+      "p50": 16.614,
+      "p95": 19.508,
+      "p99": 30.358,
+      "rpsC16": 45
+    },
+    "content": {
+      "status": 200,
+      "p50": 3.59,
+      "p95": 4.514,
+      "p99": 8.93,
+      "rpsC16": 489
+    }
+  },
+  "requests": 3000
+}

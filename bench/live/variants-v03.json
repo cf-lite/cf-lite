@@ -1,0 +1,8 @@
+{
+  "bare":   {"host": "bench-bare.ACCOUNT.workers.dev",        "redirect": "/go/github", "api": "/api/hello", "static": "/about/",  "ssr": "/blog/hello"},
+  "demo":   {"host": "cf-lite-demo.ACCOUNT.workers.dev",      "redirect": "/go/github", "api": "/api/hello", "static": "/about/",  "ssr": "/posts/1"},
+  "react":  {"host": "cflite-site-react.ACCOUNT.workers.dev",  "api": "/api/hello", "static": "/about/", "ssr": "/blog/hello"},
+  "preact": {"host": "cflite-site-preact.ACCOUNT.workers.dev", "api": "/api/hello", "static": "/about/", "ssr": "/blog/hello"},
+  "vue":    {"host": "cflite-site-vue.ACCOUNT.workers.dev",    "api": "/api/hello", "static": "/about/", "ssr": "/blog/hello"},
+  "svelte": {"host": "cflite-site-svelte.ACCOUNT.workers.dev", "api": "/api/hello", "static": "/about/", "ssr": "/blog/hello"}
+}

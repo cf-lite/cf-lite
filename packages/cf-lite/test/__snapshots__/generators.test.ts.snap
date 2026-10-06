@@ -1,0 +1,446 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generated output (snapshots = the frozen conventions) > api (+ mock + seed) and its test 1`] = `
+{
+  "mocks/api/blog-posts.json": "{
+  "items": [
+    {
+      "id": "1",
+      "name": "Blog posts one"
+    },
+    {
+      "id": "2",
+      "name": "Blog posts two"
+    }
+  ]
+}
+",
+  "seeds/blog-posts.d1.json": "{
+  "table": "blog_posts",
+  "rows": [
+    {
+      "id": 1,
+      "name": "Blog posts one"
+    },
+    {
+      "id": 2,
+      "name": "Blog posts two"
+    }
+  ]
+}
+",
+  "server/api/blog-posts.ts": "import { Hono } from "hono";
+
+type Item = { id: string; name: string };
+
+/** /api/blog-posts: list, get one, create. Typed in the client with \`hc<ApiType>\` from \`.cf-lite/app\`. Swap the stubs for your storage (\`cf-lite add d1\`). */
+export default new Hono<{ Bindings: Env }>()
+  .get("/", (c) => c.json({ items: [] as Item[] }))
+  .get("/:id", (c) => c.json({ error: "not found" }, 404))
+  .post("/", async (c) => {
+    const body = await c.req.json<{ name?: unknown }>().catch(() => ({ name: undefined }));
+    if (typeof body.name !== "string" || !body.name || body.name.length > 100) return c.json({ error: "name required (max 100 chars)" }, 400);
+    const item: Item = { id: crypto.randomUUID(), name: body.name };
+    return c.json(item, 201);
+  });
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > api (+ mock + seed) and its test 2`] = `
+{
+  "test/api/blog-posts.test.ts": "import { describe, expect, it } from "vitest";
+import { testApp } from "@cf-lite/testing";
+
+describe("/api/blog-posts", () => {
+  const app = testApp();
+
+  it("GET lists items", async () => {
+    const res = await app.fetch("/api/blog-posts");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(((await res.json()) as { items: unknown[] }).items)).toBe(true);
+  });
+
+  it("GET unknown id is 404", async () => {
+    expect((await app.fetch("/api/blog-posts/nope")).status).toBe(404);
+  });
+
+  it("POST validates the body", async () => {
+    const post = (body: unknown) => app.fetch("/api/blog-posts", { method: "POST", body: JSON.stringify(body), headers: { "content-type": "application/json" } });
+    expect((await post({})).status).toBe(400);
+    expect((await post({ name: "x" })).status).toBe(201);
+  });
+});
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > component variants: island, folder, dir 1`] = `
+{
+  "app/islands/Counter.island.tsx": "export interface CounterProps { label?: string }
+
+export default function Counter({ label = "Counter" }: CounterProps) {
+  return <div className="counter">{label}</div>;
+}
+",
+  "app/islands/Counter.states.ts": "import { defineStates } from "cf-lite/preview";
+import Counter from "./Counter";
+
+/** Named prop sets rendered by \`/__preview\` and \`cfl export\` (docs/preview.md). */
+export default defineStates(Counter, {
+  default: { label: "Counter" },
+  long: { label: "Counter with a much longer label to check wrapping" },
+  empty: { label: "" },
+});
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component tests 1`] = `
+{
+  "test/routes/about.test.ts": "import { describe, expect, it } from "vitest";
+import { testApp } from "@cf-lite/testing";
+
+describe("/about", () => {
+  it("renders", async () => {
+    const res = await testApp().fetch("/about");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toContain("text/html");
+  });
+});
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component tests 2`] = `
+{
+  "test/components/Card.states.test.ts": "import { describe, expect, it } from "vitest";
+import states from "../../app/patterns/Card/Card.states";
+
+// Every state is plain data the preview renders: keep at least one, and keep each a props object or a function returning one.
+describe("Card states", () => {
+  it("defines a default state", () => {
+    expect(Object.keys(states.states)).toContain("default");
+  });
+
+  it.each(Object.entries(states.states))("%s resolves to props", async (_n, s) => {
+    const props = typeof s === "function" ? await s() : s;
+    expect(typeof props).toBe("object");
+  });
+});
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, preact 1`] = `
+{
+  "app/routes/about.tsx": "export const render = "static";
+export const head = { title: "About" };
+
+export default function AboutPage() {
+  return <main><h1>About</h1></main>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, preact 2`] = `
+{
+  "app/routes/posts/[id].tsx": "export const render = "ssr";
+export const head = { title: "Posts" };
+export async function loader(c: { req: { param: (k: string) => string; url: string } }) {
+  return { path: new URL(c.req.url).pathname };
+}
+
+export default function PostsIdPage({ params, data }: { params: Record<string, string>; data: { path: string } }) {
+  return <main><h1>Posts</h1><p>{JSON.stringify(params)}</p><p>{data.path}</p></main>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, preact 3`] = `
+{
+  "app/components/Card.states.ts": "import { defineStates } from "cf-lite/preview";
+import Card from "./Card";
+
+/** Named prop sets rendered by \`/__preview\` and \`cfl export\` (docs/preview.md). */
+export default defineStates(Card, {
+  default: { label: "Card" },
+  long: { label: "Card with a much longer label to check wrapping" },
+  empty: { label: "" },
+});
+",
+  "app/components/Card.tsx": "export interface CardProps { label?: string }
+
+export default function Card({ label = "Card" }: CardProps) {
+  return <div className="card">{label}</div>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, react 1`] = `
+{
+  "app/routes/about.tsx": "export const render = "static";
+export const head = { title: "About" };
+
+export default function AboutPage() {
+  return <main><h1>About</h1></main>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, react 2`] = `
+{
+  "app/routes/posts/[id].tsx": "export const render = "ssr";
+export const head = { title: "Posts" };
+export async function loader(c: { req: { param: (k: string) => string; url: string } }) {
+  return { path: new URL(c.req.url).pathname };
+}
+
+export default function PostsIdPage({ params, data }: { params: Record<string, string>; data: { path: string } }) {
+  return <main><h1>Posts</h1><p>{JSON.stringify(params)}</p><p>{data.path}</p></main>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, react 3`] = `
+{
+  "app/components/Card.states.ts": "import { defineStates } from "cf-lite/preview";
+import Card from "./Card";
+
+/** Named prop sets rendered by \`/__preview\` and \`cfl export\` (docs/preview.md). */
+export default defineStates(Card, {
+  default: { label: "Card" },
+  long: { label: "Card with a much longer label to check wrapping" },
+  empty: { label: "" },
+});
+",
+  "app/components/Card.tsx": "export interface CardProps { label?: string }
+
+export default function Card({ label = "Card" }: CardProps) {
+  return <div className="card">{label}</div>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, solid 1`] = `
+{
+  "app/routes/about.tsx": "export const render = "static";
+export const head = { title: "About" };
+
+export default function AboutPage() {
+  return <main><h1>About</h1></main>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, solid 2`] = `
+{
+  "app/routes/posts/[id].tsx": "export const render = "ssr";
+export const head = { title: "Posts" };
+export async function loader(c: { req: { param: (k: string) => string; url: string } }) {
+  return { path: new URL(c.req.url).pathname };
+}
+
+export default function PostsIdPage({ params, data }: { params: Record<string, string>; data: { path: string } }) {
+  return <main><h1>Posts</h1><p>{JSON.stringify(params)}</p><p>{data.path}</p></main>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, solid 3`] = `
+{
+  "app/components/Card.states.ts": "import { defineStates } from "cf-lite/preview";
+import Card from "./Card";
+
+/** Named prop sets rendered by \`/__preview\` and \`cfl export\` (docs/preview.md). */
+export default defineStates(Card, {
+  default: { label: "Card" },
+  long: { label: "Card with a much longer label to check wrapping" },
+  empty: { label: "" },
+});
+",
+  "app/components/Card.tsx": "export interface CardProps { label?: string }
+
+export default function Card({ label = "Card" }: CardProps) {
+  return <div class="card">{label}</div>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, svelte 1`] = `
+{
+  "app/routes/about.svelte": "<script module lang="ts">
+  export const render = "static";
+  export const head = { title: "About" };
+</script>
+<script lang="ts">
+  let { params = {}, data = undefined }: { params?: Record<string, string>; data?: { path: string } } = $props();
+</script>
+
+<main><h1>About</h1></main>
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, svelte 2`] = `
+{
+  "app/routes/posts/[id].svelte": "<script module lang="ts">
+  export const render = "ssr";
+  export const head = { title: "Posts" };
+  export async function loader(c: { req: { param: (k: string) => string; url: string } }) {
+    return { path: new URL(c.req.url).pathname };
+  }
+</script>
+<script lang="ts">
+  let { params = {}, data = undefined }: { params?: Record<string, string>; data?: { path: string } } = $props();
+</script>
+
+<main><h1>Posts</h1><p>{JSON.stringify(params)}</p><p>{data?.path}</p></main>
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, svelte 3`] = `
+{
+  "app/components/Card.svelte": "<script lang="ts">
+  let { label = "Card" }: { label?: string } = $props();
+</script>
+
+<div class="card">{label}</div>
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, vue 1`] = `
+{
+  "app/routes/about.vue": "<script lang="ts">
+export const render = "static";
+export const head = { title: "About" };
+</script>
+<script setup lang="ts">
+defineProps<{ params?: Record<string, string> }>();
+</script>
+
+<template><main><h1>About</h1></main></template>
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, vue 2`] = `
+{
+  "app/routes/posts/[id].vue": "<script lang="ts">
+export const render = "ssr";
+export const head = { title: "Posts" };
+export async function loader(c: { req: { param: (k: string) => string; url: string } }) {
+  return { path: new URL(c.req.url).pathname };
+}
+</script>
+<script setup lang="ts">
+const props = defineProps<{ params?: Record<string, string>; data?: { path: string } }>();
+</script>
+
+<template><main><h1>Posts</h1><p>{{ props.params }}</p><p>{{ props.data?.path }}</p></main></template>
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page + component, vue 3`] = `
+{
+  "app/components/Card.states.ts": "import { defineStates } from "cf-lite/preview";
+import Card from "./Card.vue";
+
+/** Named prop sets rendered by \`/__preview\` and \`cfl export\` (docs/preview.md). */
+export default defineStates(Card, {
+  default: { label: "Card" },
+  long: { label: "Card with a much longer label to check wrapping" },
+  empty: { label: "" },
+});
+",
+  "app/components/Card.vue": "<script setup lang="ts">
+withDefaults(defineProps<{ label?: string }>(), { label: "Card" });
+</script>
+
+<template><div class="card">{{ label }}</div></template>
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page variants 1`] = `
+{
+  "app/routes/docs/[...rest].tsx": "export const render = "ssr";
+export const head = { title: "Docs" };
+
+export default function DocsRestPage({ params }: { params: Record<string, string> }) {
+  return <main><h1>Docs</h1><p>{JSON.stringify(params)}</p></main>;
+}
+",
+}
+`;
+
+exports[`generated output (snapshots = the frozen conventions) > page variants 2`] = `
+{
+  "app/routes/(marketing)/pricing.tsx": "export const head = { title: "Pricing" };
+
+export default function PricingPage() {
+  return <main><h1>Pricing</h1></main>;
+}
+",
+}
+`;
+
+exports[`reports and remaining branches > vue/svelte page with params and loader 1`] = `
+{
+  "app/routes/blog/[slug].vue": "<script lang="ts">
+export const render = "ssr";
+export const head = { title: "Blog" };
+export async function loader(c: { req: { param: (k: string) => string; url: string } }) {
+  return { path: new URL(c.req.url).pathname };
+}
+</script>
+<script setup lang="ts">
+const props = defineProps<{ params?: Record<string, string>; data?: { path: string } }>();
+</script>
+
+<template><main><h1>Blog</h1><p>{{ props.params }}</p><p>{{ props.data?.path }}</p></main></template>
+",
+}
+`;
+
+exports[`reports and remaining branches > vue/svelte page with params and loader 2`] = `
+{
+  "app/routes/blog/[slug].svelte": "<script module lang="ts">
+  export const render = "ssr";
+  export const head = { title: "Blog" };
+  export async function loader(c: { req: { param: (k: string) => string; url: string } }) {
+    return { path: new URL(c.req.url).pathname };
+  }
+</script>
+<script lang="ts">
+  let { params = {}, data = undefined }: { params?: Record<string, string>; data?: { path: string } } = $props();
+</script>
+
+<main><h1>Blog</h1><p>{JSON.stringify(params)}</p><p>{data?.path}</p></main>
+",
+}
+`;
+
+exports[`reports and remaining branches > vue/svelte page with params and loader 3`] = `
+{
+  "app/routes/index.tsx": "export const render = "static";
+export const head = { title: "Index" };
+
+export default function IndexPage() {
+  return <main><h1>Index</h1></main>;
+}
+",
+}
+`;

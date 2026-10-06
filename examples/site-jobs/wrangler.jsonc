@@ -1,0 +1,21 @@
+{
+  "name": "cf-lite-site-jobs",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": { "binding": "ASSETS", "run_worker_first": ["/api/*"] },
+  "observability": { "enabled": true },
+  // Everything below is what `cf-lite add cron|queue|workflow` writes; `doctor`-style checks (printed at dev/build start) diff it against server/**.
+  "triggers": { "crons": ["*/5 * * * *"] },
+  "queues": {
+    "producers": [
+      { "binding": "JOBS_QUEUE", "queue": "jobs" },
+      { "binding": "JOBS_DLQ_QUEUE", "queue": "jobs-dlq" }
+    ],
+    "consumers": [
+      { "queue": "jobs", "max_batch_size": 5, "max_batch_timeout": 1, "max_retries": 1, "dead_letter_queue": "jobs-dlq" },
+      { "queue": "jobs-dlq", "max_batch_timeout": 1 }
+    ]
+  },
+  "workflows": [{ "name": "onboarding", "binding": "ONBOARDING_WORKFLOW", "class_name": "Onboarding" }],
+  "kv_namespaces": [{ "binding": "STATE" }]
+}

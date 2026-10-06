@@ -1,0 +1,189 @@
+{
+  "name": "cf-lite",
+  "version": "0.4.2",
+  "description": "Cloudflare-only web framework-lite: Vite + Hono + Workers static assets. No runtime.",
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "vite",
+    "hono",
+    "ssr",
+    "static-assets"
+  ],
+  "homepage": "https://github.com/cf-lite/cf-lite#readme",
+  "bugs": {
+    "url": "https://github.com/cf-lite/cf-lite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cf-lite/cf-lite.git",
+    "directory": "packages/cf-lite"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "bin": {
+    "cf-lite": "./dist/cli.js",
+    "cfl": "./dist/cli.js"
+  },
+  "sideEffects": [
+    "./dist/view-transitions-client.js"
+  ],
+  "files": [
+    "dist",
+    "templates",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "default": "./dist/vite.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "default": "./dist/server.js"
+    },
+    "./fonts": {
+      "types": "./dist/vite-fonts.d.ts",
+      "default": "./dist/vite-fonts.js"
+    },
+    "./head": {
+      "types": "./dist/head.d.ts",
+      "default": "./dist/head.js"
+    },
+    "./href": {
+      "types": "./dist/href.d.ts",
+      "default": "./dist/href.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    },
+    "./view-transitions-client": {
+      "types": "./dist/view-transitions-client.d.ts",
+      "default": "./dist/view-transitions-client.js"
+    },
+    "./islands": {
+      "types": "./dist/islands.d.ts",
+      "default": "./dist/islands.js"
+    },
+    "./islands-server": {
+      "types": "./dist/islands-server.d.ts",
+      "default": "./dist/islands-server.js"
+    },
+    "./islands-client": {
+      "types": "./dist/client-islands.d.ts",
+      "default": "./dist/client-islands.js"
+    },
+    "./preview": {
+      "types": "./dist/preview.d.ts",
+      "default": "./dist/preview.js"
+    },
+    "./adapter": {
+      "types": "./dist/adapter.d.ts",
+      "default": "./dist/adapter.js"
+    },
+    "./vite-images": {
+      "types": "./dist/vite-images.d.ts",
+      "default": "./dist/vite-images.js"
+    },
+    "./add": {
+      "types": "./dist/add.d.ts",
+      "default": "./dist/add.js"
+    },
+    "./client-realtime": {
+      "types": "./dist/client-realtime.d.ts",
+      "default": "./dist/client-realtime.js"
+    },
+    "./add-jobs": {
+      "types": "./dist/add-jobs.d.ts",
+      "default": "./dist/add-jobs.js"
+    },
+    "./add-ai": {
+      "types": "./dist/add-ai.d.ts",
+      "default": "./dist/add-ai.js"
+    },
+    "./add-patterns": {
+      "types": "./dist/add-patterns.d.ts",
+      "default": "./dist/add-patterns.js"
+    },
+    "./doctor": {
+      "types": "./dist/doctor.d.ts",
+      "default": "./dist/doctor.js"
+    },
+    "./add-auth": {
+      "types": "./dist/add-auth.d.ts",
+      "default": "./dist/add-auth.js"
+    },
+    "./modules/*": {
+      "types": "./dist/modules/*.d.ts",
+      "default": "./dist/modules/*.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "default": "./dist/config.js"
+    },
+    "./conventions": {
+      "types": "./dist/conventions/index.d.ts",
+      "default": "./dist/conventions/index.js"
+    },
+    "./conventions/*": {
+      "types": "./dist/conventions/*.d.ts",
+      "default": "./dist/conventions/*.js"
+    },
+    "./wrangler-edit": {
+      "types": "./dist/wrangler-edit.d.ts",
+      "default": "./dist/wrangler-edit.js"
+    },
+    "./navigation": {
+      "types": "./dist/navigation.d.ts",
+      "default": "./dist/navigation.js"
+    },
+    "./match": {
+      "types": "./dist/match.d.ts",
+      "default": "./dist/match.js"
+    },
+    "./rsc": {
+      "types": "./dist/modules/rsc-server.d.ts",
+      "default": "./dist/modules/rsc-server.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && chmod +x dist/cli.js"
+  },
+  "dependencies": {
+    "@cloudflare/vite-plugin": "^1.62.2"
+  },
+  "peerDependencies": {
+    "hono": "^4.6.0",
+    "vite": "^8.0.0",
+    "wrangler": "^4.144.0",
+    "@vitejs/plugin-rsc": "0.5.35",
+    "react-server-dom-webpack": "19.3.0",
+    "rsc-html-stream": "0.0.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260930.1",
+    "@types/node": "^24.0.0",
+    "hono": "^4.13.11",
+    "vite": "^8.3.1",
+    "wrangler": "^4.144.0"
+  },
+  "peerDependenciesMeta": {
+    "@vitejs/plugin-rsc": {
+      "optional": true
+    },
+    "react-server-dom-webpack": {
+      "optional": true
+    },
+    "rsc-html-stream": {
+      "optional": true
+    }
+  }
+}

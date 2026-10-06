@@ -1,0 +1,19 @@
+{
+  "name": "cf-lite-cms-head",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": { "binding": "ASSETS" }, // run_worker_first is generated (root catch-all: negations keep public/ and /assets served by the asset layer)
+  // The mock CMS keeps its entries in KV; pages are ISR "durable static" (HTML in R2, regenerated through the "isr" queue after a publish webhook).
+  "r2_buckets": [{ "binding": "ISR_BUCKET", "bucket_name": "cf-lite-cms-head" }],
+  "kv_namespaces": [{ "binding": "CONTENT" }, { "binding": "WEBHOOK_KV" }],
+  "queues": {
+    // webhook receiver -> "cms-webhook" queue -> consumer revalidates tags -> "isr" queue regenerates pages
+    "producers": [{ "binding": "ISR_QUEUE", "queue": "isr" }, { "binding": "WEBHOOK_QUEUE", "queue": "cms-webhook" }],
+    "consumers": [
+      { "queue": "isr", "max_batch_size": 10, "max_batch_timeout": 1, "max_retries": 3 },
+      { "queue": "cms-webhook", "max_batch_size": 10, "max_batch_timeout": 1, "max_retries": 3 }
+    ]
+  },
+  // Demo values for the MOCK CMS only. A real CMS: set CMS_URL (or a service binding) and put the secrets with `wrangler secret put`.
+  "vars": { "CMS_TOKEN": "demo-cms-token", "CMS_WEBHOOK_SECRET": "demo-webhook-secret-not-a-real-secret", "DRAFT_SECRET": "demo-draft-secret-0123456789abcdef-not-real" }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "cf-lite-site-htmx",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "not_found_handling": "single-page-application",
+    // Only these run the Worker. cf-lite appends SSR route globs automatically.
+    "run_worker_first": ["/api/*"]
+  }
+}
