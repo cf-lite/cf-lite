@@ -68,7 +68,7 @@ describe("set-repo-url", () => {
       "README.md": `see ${OLD}/blob/main/docs/x.md and ${OLD}-other/x and https://github.com/old-owner/cf-lite-docs\n`,
       "llms.txt": `- [A](${OLD}/blob/main/a.md)\n`,
     };
-    for (const p of ["cf-lite", "create-cf-lite", "preact", "react", "solid", "svelte", "vue"]) {
+    for (const p of ["cf-lite", "create-cf-lite", "preact", "react", "svelte", "vue"]) {
       mkdirSync(join(d, "packages", p), { recursive: true });
       files[`packages/${p}/package.json`] = JSON.stringify({ name: p, homepage: `${OLD}#readme`, bugs: { url: `${OLD}/issues` }, repository: { type: "git", url: `git+${OLD}.git` } }, null, 2) + "\n";
     }
@@ -89,9 +89,9 @@ describe("set-repo-url", () => {
   it("rewrites package.json fields and links, leaves look-alike names alone, and is idempotent", () => {
     const d = mk();
     try {
-      expect(setRepoUrl(d, NEW, { dryRun: true }).length).toBe(9);
+      expect(setRepoUrl(d, NEW, { dryRun: true }).length).toBe(8);
       expect(readFileSync(join(d, "README.md"), "utf8")).toContain(OLD);
-      expect(setRepoUrl(d, NEW).length).toBe(9);
+      expect(setRepoUrl(d, NEW).length).toBe(8);
       expect(checkRepoUrl(d, NEW)).toEqual([]);
       const j = JSON.parse(readFileSync(join(d, "packages/vue/package.json"), "utf8"));
       expect([j.homepage, j.bugs.url, j.repository.url]).toEqual([`${NEW}#readme`, `${NEW}/issues`, `git+${NEW}.git`]);

@@ -65,7 +65,7 @@ test("ssr + hydrate page: nested layouts, head, hydrates, SPA link back", async 
 });
 
 // 2.9 a11y: after a client-side navigation every adapter must announce the new page, move focus to the content and reset scroll.
-// (Runs once per adapter app: site, site-preact, site-vue, site-svelte, site-solid. The router lives in cf-lite; the adapter owns the view swap.)
+// (Runs once per adapter app: site, site-preact, site-vue, site-svelte. The router lives in cf-lite; the adapter owns the view swap.)
 test("client navigation: route announcer, focus moves to main, scroll resets, keyboard + back work", async ({ page }) => {
   await page.goto("/app/dashboard");
   await expect(page.getByTestId("h")).toHaveText("Dashboard (spa)");

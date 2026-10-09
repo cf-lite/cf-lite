@@ -228,54 +228,6 @@ export default function Card({ label = "Card" }: CardProps) {
 }
 `;
 
-exports[`generated output (snapshots = the frozen conventions) > page + component, solid 1`] = `
-{
-  "app/routes/about.tsx": "export const render = "static";
-export const head = { title: "About" };
-
-export default function AboutPage() {
-  return <main><h1>About</h1></main>;
-}
-",
-}
-`;
-
-exports[`generated output (snapshots = the frozen conventions) > page + component, solid 2`] = `
-{
-  "app/routes/posts/[id].tsx": "export const render = "ssr";
-export const head = { title: "Posts" };
-export async function loader(c: { req: { param: (k: string) => string; url: string } }) {
-  return { path: new URL(c.req.url).pathname };
-}
-
-export default function PostsIdPage({ params, data }: { params: Record<string, string>; data: { path: string } }) {
-  return <main><h1>Posts</h1><p>{JSON.stringify(params)}</p><p>{data.path}</p></main>;
-}
-",
-}
-`;
-
-exports[`generated output (snapshots = the frozen conventions) > page + component, solid 3`] = `
-{
-  "app/components/Card.states.ts": "import { defineStates } from "cf-lite/preview";
-import Card from "./Card";
-
-/** Named prop sets rendered by \`/__preview\` and \`cfl export\` (docs/preview.md). */
-export default defineStates(Card, {
-  default: { label: "Card" },
-  long: { label: "Card with a much longer label to check wrapping" },
-  empty: { label: "" },
-});
-",
-  "app/components/Card.tsx": "export interface CardProps { label?: string }
-
-export default function Card({ label = "Card" }: CardProps) {
-  return <div class="card">{label}</div>;
-}
-",
-}
-`;
-
 exports[`generated output (snapshots = the frozen conventions) > page + component, svelte 1`] = `
 {
   "app/routes/about.svelte": "<script module lang="ts">

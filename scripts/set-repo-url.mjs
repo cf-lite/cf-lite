@@ -10,7 +10,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = join(dirname(fileURLToPath(import.meta.url)), "..");
-const PUBLISHED = ["cf-lite", "create-cf-lite", "preact", "react", "solid", "svelte", "vue"];
+const PUBLISHED = ["cf-lite", "create-cf-lite", "preact", "react", "svelte", "vue"];
 const REPO_RE = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/;
 const SKIP = new Set(["bun.lock", "scripts/set-repo-url.mjs", "packages/cf-lite/test/public-hygiene.test.ts"]);
 

@@ -80,7 +80,7 @@ Two caveats the numbers hide:
 |---|---|---|---|
 | React 19 | Yes | Yes: peer `react >=18`; rendered all 10 stories on React 19.3.0 | OBSERVED (Ladle), docs |
 | Repo's Vite (`^8.3.1`) | Native (the app's own Vite) | Not shared: private Vite 6.4.3; Vite 8 plugins in the app config (cf-lite, `@cloudflare/vite-plugin`) cannot run in it, so the app config must be bypassed; `vite-tsconfig-paths` (built in) resolved the `@patterns/*` alias | OBSERVED |
-| Preact / Vue / Svelte / Solid | `bind()` exists for React, Preact, Vue, Solid; **Svelte has none** (index says so, `cfl export` stops) | **React only**: "Ladle supports only React" ([ladle.dev/docs](https://ladle.dev/docs/), 2026-10-06) | DOC-ONLY |
+| Preact / Vue / Svelte | `bind()` exists for React, Preact, Vue; **Svelte has none** (index says so, `cfl export` stops) | **React only**: "Ladle supports only React" ([ladle.dev/docs](https://ladle.dev/docs/), 2026-10-06) | DOC-ONLY |
 | Runtime fidelity | Renders in **workerd** through the app's real SSR adapter; markup present without JS (`curl` of the frame returns `<button ... class="btn btn--ghost">Details</button>`) | Browser only: Vite dev page, empty `#ladle-root`; `curl` of a story page contained **0** matches for the button text | OBSERVED |
 | Islands and hydration | Island markup is `<cfl-island data-i=... data-p=...>` SSR output, hydrated by the real runtime in the frame (observed markup for `Counter` `from-ten`) | The island is just a React component mounted client-side; the `<cfl-island>` wrapper, SSR output and hydration path are never exercised | OBSERVED (cf-lite markup), reasoning (Ladle) |
 | Hono routes and `MOCK=1` | `MOCK=1 cf-lite dev` served `/api/products` as `application/json`; the preview and pages share it | `ladle serve` answered `/api/products` with **200 `text/html`** (SPA fallback); no Hono, no `mocks/` folder. Ladle's own mocking is MSW (browser service worker, own handlers) | OBSERVED |
@@ -117,7 +117,7 @@ export default { title: "patterns/atoms/Button/Button" };
 export const Ghost = () => <C {...(def.states["ghost"] as object)} />;
 ```
 
-Result: 9 stories from the 10 states in 3 states files, `ladle build` OK (0.47 MiB), and 2 sampled generated stories (`blocks--hero--edit-mode`, `productcard--sold-out`) rendered in Chromium. Not covered by the prototype and therefore **not** claimed: watch mode (new state -> regenerate), `.island.tsx` handling, titles for plain `export const states` files, Vue/Preact/Solid/Svelte (Ladle cannot render them at all).
+Result: 9 stories from the 10 states in 3 states files, `ladle build` OK (0.47 MiB), and 2 sampled generated stories (`blocks--hero--edit-mode`, `productcard--sold-out`) rendered in Chromium. Not covered by the prototype and therefore **not** claimed: watch mode (new state -> regenerate), `.island.tsx` handling, titles for plain `export const states` files, Vue/Preact/Svelte (Ladle cannot render them at all).
 
 Known limits: (1) a **function state is skipped** (`expensive` in `ProductCard`: a sync story cannot await it; ~1 in 10 states here); (2) React only; (3) client-side rendering only: no SSR, no islands, no Hono mocks; (4) generated files must be gitignored and a Vite-8-vs-6 split config maintained; (5) the full footprint of section 2 (+465 packages, +240 MB, 5 audit findings) applies to anyone who opts in.
 
@@ -144,7 +144,7 @@ Known limits: (1) a **function state is skipped** (`expensive` in `ProductCard`:
 |---|---|
 | Migrate every `*.states.ts` to CSF (or run the generator), drop `defineStates` typing and async states | M per app, L across Line B |
 | Lose workerd/SSR fidelity, island hydration, `MOCK=1` sharing (re-implement mocks as MSW handlers) | M, and a permanent fidelity loss |
-| Lose Preact/Vue/Svelte/Solid previews (4 of 5 adapters) | Not recoverable inside Ladle |
+| Lose Preact/Vue/Svelte previews (3 of 4 adapters) | Not recoverable inside Ladle |
 | Line B: keep `cfl export` fragments, the Razor parity view and `generatedStates` reuse | L (a second path, or the hybrid generator) |
 | Track Ladle: Vite 6 vs 8 split, MSW 2 breaking changes, Node floor, single maintainer | M/yr, ESTIMATED |
 
@@ -182,7 +182,7 @@ Known limits: (1) a **function state is skipped** (`expensive` in `ProductCard`:
 |---|---|---|---|---|
 | Install footprint | 0 packages | +465 pkgs, +240 MB for everyone | 0 unless opted in | 0 unless opted in |
 | Runtime fidelity (workerd, SSR, islands, mocks) | Full | Lost | Full in built-in; browser-only in Ladle | Full in built-in; browser-only in Ladle |
-| Adapters covered | React, Preact, Vue, Solid (Svelte: no `bind`) | React only | same as built-in (Ladle part: React only) | same |
+| Adapters covered | React, Preact, Vue (Svelte: no `bind`) | React only | same as built-in (Ladle part: React only) | same |
 | Line B / Razor parity (`cfl export`, `generatedStates`) | Yes, one file | Needs a second path | Yes | Yes, one file |
 | Features Ladle has and we lack (dark/RTL, controls, a11y, live refresh) | Gaps, S-M each | Included | Via Ladle, for React teams only | Via Ladle, for React teams only |
 | Build cost | S-M per gap | L (migration) | S-M | M |

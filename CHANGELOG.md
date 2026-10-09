@@ -11,6 +11,12 @@ Versions below are the `version` fields of the packages at the commit noted.
 
 ## Unreleased
 
+### Removed
+
+* **`@cf-lite/solid`**: the Solid adapter, `examples/site-solid`, the `solid` option of `create-cf-lite --ui` and `cf-lite add`, and the scaffold `overrides` field that only carried its `seroval` pin. Maintained packages are now `cf-lite`, `create-cf-lite` and `@cf-lite/{preact,react,svelte,vue}`; `@cf-lite/solid@0.4.2` stays on the registry unmaintained. Decision: [D-027](docs/DECISIONS.md).
+
+### Other
+
 * **Docs: npm status corrected, issue templates**: README, getting-started and `docs/published.md` state the registry as checked on 2026-10-06 (`create-cf-lite` 0.4.1, the other six at 0.4.0, this repository at 0.4.2); bug and feature issue templates added under `.github/ISSUE_TEMPLATE`.
 * **`deploy-smoke` is off by default**: its job runs only when the repo variable `CF_SMOKE_ENABLED` is `true`, otherwise it is skipped. How to enable it: [deploy.md](docs/deploy.md#deploy-smoke-nightly-ci).
 * **`0.4.2` for all seven published packages (published 2026-10-06)**: `repository`, `bugs` and `homepage` now point at `https://github.com/cf-lite/cf-lite`, the docs link written into scaffolds and the toolkit-terms link use the same URL; hosted CI runners only (`ubuntu-latest`). See [published.md](docs/published.md).

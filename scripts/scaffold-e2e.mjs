@@ -11,7 +11,7 @@ const cli = join(root, "packages/cf-lite/dist/cli.js");
 const require = createRequire(root);
 const wr = join(dirname(require.resolve("wrangler/package.json")), "bin/wrangler.js");
 
-for (const ui of ["none", "react", "preact", "vue", "svelte", "solid", "htmx"]) {
+for (const ui of ["none", "react", "preact", "vue", "svelte", "htmx"]) {
   const dir = join(root, `examples/.scaffold-${ui}`);
   rmSync(dir, { recursive: true, force: true });
   let r = spawnSync(process.execPath, [join(root, "packages/create-cf-lite/index.mjs"), dir, "--ui", ui, "--no-install"], { encoding: "utf8" });

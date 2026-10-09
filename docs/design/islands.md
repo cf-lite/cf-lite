@@ -71,7 +71,7 @@ The contract (`islands: { wrap, mount }`) was enough; two core touches. (1) `ISL
 ## Non-goals (v1)
 
 * `children` / slots across the boundary (Astro has slots; here: render children inside the island or split it).
-* Per-use strategy override, `client:only` (no SSR) islands, islands in Svelte/Solid adapters (Vue was added through the same contract, see below; Svelte and Solid were not attempted, blockers in [../islands.md](../islands.md)).
+* Per-use strategy override, `client:only` (no SSR) islands, islands in the Svelte adapter (Vue was added through the same contract, see below; Svelte was not attempted, blockers in [../islands.md](../islands.md)).
 * Shared state between islands (use a module-level store or events; islands are separate roots).
 
 ## Test map

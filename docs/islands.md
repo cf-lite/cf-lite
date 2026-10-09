@@ -51,7 +51,7 @@ Islands cannot take `children`. Render them inside the island, or split the isla
 * Nested islands: only the outermost hydrates on its own; inner ones are part of its tree.
 * An island file must `export default` the component. `export const client` must be a string literal.
 * Not supported in `render = "rsc"` apps (use `"use client"` there).
-* Svelte and Solid adapters do not implement islands. Not attempted, with these expected blockers: Svelte 5 `hydrate()` expects the hydration markers its own `render()` wrote around the component root, which a component nested inside a page's server output does not have; Solid's hydration ids (`data-hk`) are numbered across one whole render pass, so an island subtree cannot be hydrated on its own. Either needs adapter-specific server wrapping, not just the two modules of the contract.
+* The Svelte adapter does not implement islands. Not attempted, with this expected blocker: Svelte 5 `hydrate()` expects the hydration markers its own `render()` wrote around the component root, which a component nested inside a page's server output does not have. It needs adapter-specific server wrapping, not just the two modules of the contract.
 
 ## Vue (`*.island.vue`)
 

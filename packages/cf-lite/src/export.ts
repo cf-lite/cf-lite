@@ -127,7 +127,7 @@ export async function runExport(o: ExportOptions): Promise<number> {
       try { const r = await fetch(`${base}/__preview/api/manifest`); if (r.ok) manifest = (await r.json()) as never; } catch { /* not up yet */ }
       if (!manifest) await new Promise((r) => setTimeout(r, 400));
     }
-    if (!manifest.adapterBind) throw new Error("this UI adapter cannot render components (react, preact, vue and solid can)");
+    if (!manifest.adapterBind) throw new Error("this UI adapter cannot render components (react, preact and vue can)");
     if (!manifest.items.length) throw new Error("no components found under app/ (add app/components/Name.tsx or Name.states.ts)");
     const errors: string[] = manifest.items.filter((i) => i.error).map((i) => `${i.id}: ${i.error}`);
     const items = manifest.items.filter((i) => !i.error);

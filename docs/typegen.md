@@ -25,7 +25,7 @@ param also throws at runtime. Pages (`app/routes/**`) and `server/routes/**` han
 
 ## `<Link to>`
 
-In the react / preact / solid / vue adapters (and `@cf-lite/svelte/Link.svelte`, via its ambient declaration in `@cf-lite/svelte/env`) `to` has type `LinkTo`: a concrete path matching a known route (with optional `/`, `?query`, `#hash`), an
+In the react / preact / vue adapters (and `@cf-lite/svelte/Link.svelte`, via its ambient declaration in `@cf-lite/svelte/env`) `to` has type `LinkTo`: a concrete path matching a known route (with optional `/`, `?query`, `#hash`), an
 `http(s)://` / `mailto:` / `tel:` URL, `#hash`, `?query`, or the result of `href()`. A typo such as `to="/blgo/x"` does not compile. A dynamic string needs
 `href()` (or a cast).
 
@@ -48,12 +48,11 @@ const slug = params.value.slug;                            // string
 navigate("/blog/hello");
 ```
 
-- **Solid** (`@cf-lite/solid/client`): identical to React (`useParams("/blog/:slug").slug`, typed `navigate`).
 - **Vue** (`@cf-lite/vue/client`): `useParams(pattern)` returns `ComputedRef<Params<pattern>>`; `useParams()` stays `ComputedRef<Record<string, string>>`.
 - **Svelte**: there is no `useParams`; pages and layouts get `params` as a prop (type it with `PageProps<"/blog/:slug">`). `navigate` from `@cf-lite/svelte/client` is typed like the others.
   `Link.svelte` is typed from the ambient `@cf-lite/svelte/env` declaration (`to: LinkTo`), so the `.svelte` file stays plain JS.
 
-`test/typegen.test.ts` compiles the real vue / solid / svelte adapter sources against a generated route table (valid calls pass, typos fail).
+`test/typegen.test.ts` compiles the real vue / svelte adapter sources against a generated route table (valid calls pass, typos fail).
 
 ## Loader / action data
 

@@ -64,8 +64,6 @@ export interface AdapterScaffold {
   /** Dependencies the *app* needs, name -> semver range. */
   deps: Record<string, string>;
   devDeps?: Record<string, string>;
-  /** Merged into the app's `overrides` (npm/bun) - e.g. pin a patched transitive dependency. Existing entries win. */
-  overrides?: Record<string, string>;
   /** Client entry file (relative to the app root) and its content. */
   entry: { file: string; content: string };
   /** Extra starter files, relative path -> content (only written when absent). */

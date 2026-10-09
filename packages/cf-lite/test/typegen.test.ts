@@ -109,24 +109,19 @@ export const s: string = useParams("/blog/:slug").slug;
 export const rest: string | undefined = useParams("/docs/*?")["*"];
 export const any: Record<string, string> = useParams();
 navigate("/blog/hello"); navigate("/docs/a/b?x=1", true); navigate(href("/blog/:slug", { slug: "x" })); navigate("https://x.dev");`,
-    // the real adapter sources (vue / solid client.ts; svelte's ambient Link.svelte declaration), compiled against the generated route table
+    // the real adapter sources (vue client.ts; svelte's ambient Link.svelte declaration), compiled against the generated route table
     "ok-adapters.ts": `import { useParams as vueParams, navigate as vueNavigate } from "${join(ADAPTERS, "vue/src/client.ts")}";
-import { useParams as solidParams, navigate as solidNavigate } from "${join(ADAPTERS, "solid/src/client.ts")}";
 import { navigate as svelteNavigate } from "${join(ADAPTERS, "svelte/src/client.ts")}";
 import Link from "@cf-lite/svelte/Link.svelte";
 import type { ComponentProps } from "svelte";
 export const v: string = vueParams("/blog/:slug").value.slug;
 export const va: Record<string, string> = vueParams().value;
-export const s: string = solidParams("/blog/:slug").slug;
-export const sa: Record<string, string> = solidParams();
-vueNavigate("/blog/hello"); solidNavigate("/docs/a", true); svelteNavigate("/list");
+vueNavigate("/blog/hello"); svelteNavigate("/list");
 export const lp: ComponentProps<typeof Link> = { to: "/blog/hello" };`,
     "svelte-env.d.ts": readFileSync(join(ADAPTERS, "svelte/env.d.ts"), "utf8"),
     "bad-vue-useparams.ts": `import { useParams } from "${join(ADAPTERS, "vue/src/client.ts")}"; useParams("/nope");`,
     "bad-vue-useparams-key.ts": `import { useParams } from "${join(ADAPTERS, "vue/src/client.ts")}"; useParams("/blog/:slug").value.id;`,
     "bad-vue-navigate.ts": `import { navigate } from "${join(ADAPTERS, "vue/src/client.ts")}"; navigate("/blgo/x");`,
-    "bad-solid-useparams.ts": `import { useParams } from "${join(ADAPTERS, "solid/src/client.ts")}"; useParams("/nope");`,
-    "bad-solid-navigate.ts": `import { navigate } from "${join(ADAPTERS, "solid/src/client.ts")}"; navigate("/blgo/x");`,
     "bad-svelte-navigate.ts": `import { navigate } from "${join(ADAPTERS, "svelte/src/client.ts")}"; navigate("/blgo/x");`,
     "bad-svelte-link.ts": `import Link from "@cf-lite/svelte/Link.svelte"; import type { ComponentProps } from "svelte"; export const p: ComponentProps<typeof Link> = { to: "/blgo/x" };`,
     "bad-useparams-route.ts": `import type { UseParams } from "cf-lite/href"; declare const useParams: UseParams; useParams("/nope");`,
@@ -144,8 +139,8 @@ export const lp: ComponentProps<typeof Link> = { to: "/blog/hello" };`,
   });
 
   it("valid usage typechecks", () => { expect(diag["ok.ts"]).toEqual([]); expect(diag["ok-hooks.ts"]).toEqual([]); });
-  it("vue / solid / svelte adapters are typed from the route table", () => { expect(diag["ok-adapters.ts"]).toEqual([]); });
-  it.each(["bad-route", "bad-missing-param", "bad-wrong-param", "bad-param-type", "bad-link", "bad-data", "bad-action", "bad-pageprops", "bad-selfref", "bad-useparams-route", "bad-useparams-key", "bad-navigate", "bad-vue-useparams", "bad-vue-useparams-key", "bad-vue-navigate", "bad-solid-useparams", "bad-solid-navigate", "bad-svelte-navigate", "bad-svelte-link"])("%s fails to compile", (n) => {
+  it("vue / svelte adapters are typed from the route table", () => { expect(diag["ok-adapters.ts"]).toEqual([]); });
+  it.each(["bad-route", "bad-missing-param", "bad-wrong-param", "bad-param-type", "bad-link", "bad-data", "bad-action", "bad-pageprops", "bad-selfref", "bad-useparams-route", "bad-useparams-key", "bad-navigate", "bad-vue-useparams", "bad-vue-useparams-key", "bad-vue-navigate", "bad-svelte-navigate", "bad-svelte-link"])("%s fails to compile", (n) => {
     expect(diag[`${n}.ts`].length).toBeGreaterThan(0);
   });
 });

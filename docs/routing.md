@@ -20,7 +20,7 @@ An optional catch-all compiles to two Worker-first globs (`/docs` and `/docs/*`,
 
 Per directory, nearest ancestor wins (like layouts). They are not routes.
 
-- **`_loading.tsx`** — the Suspense fallback wrapped around the page (inside the layouts, which stay mounted). React adapter; other adapters ignore it (Preact has no Suspense in core; Vue/Svelte/Solid: not wired yet).
+- **`_loading.tsx`** — the Suspense fallback wrapped around the page (inside the layouts, which stay mounted). React adapter; other adapters ignore it (Preact has no Suspense in core; Vue/Svelte: not wired yet).
   SSR flushes the shell before slow Suspense children resolve, so TTFB is not loader-bound.
 - **`_error.tsx`** — rendered when the loader or the render throws **before the first byte**: status 500, props `{ params, data: { error: { message, digest } } }` (`digest` = `cf-ray` or a random id, also
   written to the Worker log as `[cf-lite] render error digest=…`). In production `message` is always `"Internal Server Error"`: the stack never reaches the client; in dev it is the real message.
@@ -91,9 +91,9 @@ A page module is imported by both the Worker (full module) and the client router
 removes the top-level exports `loader`, `actions`, `cache`, `isr` and `paths` from `app/routes/**/*.{ts,tsx,js,jsx,vue,svelte}` before bundling, leaving an `undefined` stub for in-file
 references; imports only those exports used are then tree-shaken. `scripts/isr-route-e2e.mjs` and `test/strip-server.test.ts` assert the built client chunks contain no loader/action body.
 Limits: detection is syntactic (`export const|function name`, `export { name }`; a destructured export is left alone), and an import with top-level side effects stays in the chunk — keep
-server-only code in `server/`. In `.vue` files only the plain `<script>` block is rewritten (`<script setup>` cannot export route config anyway); in `.svelte` files only `<script module>` / `context="module"`. Solid pages are `.tsx` and covered by the normal path.
+server-only code in `server/`. In `.vue` files only the plain `<script>` block is rewritten (`<script setup>` cannot export route config anyway); in `.svelte` files only `<script module>` / `context="module"`.
 
 ## Not in this release
 
-`defer()` streaming loaders, layout-level `loader`s, viewport prefetch / SSR HTML-fragment prefetch, `_loading`/`_error` wiring for Vue/Svelte/Solid (and `_loading` for Preact), group-level `middleware` files,
+`defer()` streaming loaders, layout-level `loader`s, viewport prefetch / SSR HTML-fragment prefetch, `_loading`/`_error` wiring for Vue/Svelte (and `_loading` for Preact), group-level `middleware` files,
 and the per-adapter axe/focus browser test. Tracked in the roadmap (WP-ROUTE).

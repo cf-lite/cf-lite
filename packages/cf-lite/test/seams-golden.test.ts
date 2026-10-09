@@ -15,7 +15,6 @@ const CASES: [string, UiAdapter | "none"][] = [
   ["site", stub("@cf-lite/react", [".tsx", ".jsx", ".ts", ".js"])],
   ["site-htmx", "none"],
   ["site-preact", stub("@cf-lite/preact", [".tsx", ".jsx", ".ts", ".js"])],
-  ["site-solid", stub("@cf-lite/solid", [".tsx", ".jsx", ".ts", ".js"])],
   ["site-svelte", stub("@cf-lite/svelte", [".svelte"])],
   ["site-vue", stub("@cf-lite/vue", [".vue"])],
 ];

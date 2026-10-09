@@ -12,7 +12,7 @@ export const GENERATORS = ["page", "api", "component", "test"] as const;
 export type Generator = (typeof GENERATORS)[number];
 export const isGenerator = (s: string | undefined): s is Generator => (GENERATORS as readonly string[]).includes(s as string);
 
-export const UIS = ["react", "preact", "solid", "vue", "svelte"] as const;
+export const UIS = ["react", "preact", "vue", "svelte"] as const;
 export type Ui = (typeof UIS)[number];
 export const RENDERS = ["static", "ssr", "spa"] as const;
 
@@ -24,7 +24,7 @@ export interface GenOptions {
   render?: string;
   /** page: add a `loader` (static or ssr). */
   loader?: boolean;
-  /** component: write an `*.island.tsx` (hydrated in the preview frame; react/preact/solid). */
+  /** component: write an `*.island.tsx` (hydrated in the preview frame; react/preact). */
   island?: boolean;
   /** component: folder-per-component (`Card/Card.tsx`). */
   folder?: boolean;
@@ -109,8 +109,7 @@ export const apiSeed = (name: string): string => json({ table: snake(name), rows
 export function componentTemplate(ui: Ui, name: string): string {
   if (ui === "vue") return `<script setup lang="ts">\nwithDefaults(defineProps<{ label?: string }>(), { label: "${name}" });\n</script>\n\n<template><div class="${lower1(name)}">{{ label }}</div></template>\n`;
   if (ui === "svelte") return `<script lang="ts">\n  let { label = "${name}" }: { label?: string } = $props();\n</script>\n\n<div class="${lower1(name)}">{label}</div>\n`;
-  const cls = ui === "solid" ? "class" : "className";
-  return `export interface ${name}Props { label?: string }\n\nexport default function ${name}({ label = "${name}" }: ${name}Props) {\n  return <div ${cls}="${lower1(name)}">{label}</div>;\n}\n`;
+  return `export interface ${name}Props { label?: string }\n\nexport default function ${name}({ label = "${name}" }: ${name}Props) {\n  return <div className="${lower1(name)}">{label}</div>;\n}\n`;
 }
 export function statesTemplate(name: string, importPath: string): string {
   return `import { defineStates } from "cf-lite/preview";\nimport ${name} from ${JSON.stringify(importPath)};\n\n/** Named prop sets rendered by \`/__preview\` and \`cfl export\` (docs/preview.md). */\nexport default defineStates(${name}, {\n  default: { label: "${name}" },\n  long: { label: "${name} with a much longer label to check wrapping" },\n  empty: { label: "" },\n});\n`;
@@ -172,7 +171,7 @@ export function planGenerate(dir: string, generator: Generator, nameArg: string 
     notes.push(`mounted at /api/${name} by the api convention (no wiring needed)`);
   } else if (generator === "component") {
     ui = needUi(detectUi(dir, o.ui), "a component");
-    if (o.island && !["react", "preact", "solid"].includes(ui)) throw new GenError(`--island is for react|preact|solid (got ${ui}); Vue/Svelte islands use their own conventions`);
+    if (o.island && !["react", "preact"].includes(ui)) throw new GenError(`--island is for react|preact (got ${ui}); Vue/Svelte islands use their own conventions`);
     const loc = componentLocation(o, name, ui);
     add(loc.file, componentTemplate(ui, name));
     if (ui === "svelte") notes.push("Svelte has no preview bind() yet: no states file written (docs/preview.md#adapters)");

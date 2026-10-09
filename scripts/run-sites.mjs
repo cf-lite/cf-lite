@@ -1,6 +1,6 @@
 // Runs scripts/site-e2e.mjs (workerd behaviour) for every UI adapter's example app.
 import { spawnSync } from "node:child_process";
-export const SITES = ["site", "site-preact", "site-vue", "site-svelte", "site-solid"];
+export const SITES = ["site", "site-preact", "site-vue", "site-svelte"];
 if (import.meta.url === `file://${process.argv[1]}`) {
   let failed = 0;
   for (const SITE of SITES) {

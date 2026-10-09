@@ -9,7 +9,7 @@ owner: maintainer
 # Brief: keep the framework adapter packages (`@cf-lite/*`) working and honest
 
 ## 1. Purpose
-The five UI adapters (`@cf-lite/react`, `preact`, `solid`, `svelte`, `vue`; the htmx/Alpine preset is not a package) follow the contract in [`docs/adapters.md`](../docs/adapters.md), build, scaffold and render under workerd on the current `main`, keep their peer ranges accurate, and say what is experimental. Not your job: adding a UI to core (cf-lite stays UI-agnostic, [D-009](../docs/DECISIONS.md#d-009-cf-lite-stays-ui-agnostic-ui-adapters-are-opt-in)), publishing, or declaring a feature stable.
+The four UI adapters (`@cf-lite/react`, `preact`, `svelte`, `vue`; the htmx/Alpine preset is not a package) follow the contract in [`docs/adapters.md`](../docs/adapters.md), build, scaffold and render under workerd on the current `main`, keep their peer ranges accurate, and say what is experimental. Not your job: adding a UI to core (cf-lite stays UI-agnostic, [D-009](../docs/DECISIONS.md#d-009-cf-lite-stays-ui-agnostic-ui-adapters-are-opt-in)), publishing, or declaring a feature stable.
 
 ## 2. Trigger
 A new major of a UI library or of Vite; a change to the `UiAdapter` contract in core; an adapter test, scaffold or example fails; an audit finding in an adapter's dependencies ([dependency-audit](dependency-audit.md)); a request for a new adapter (the owner decides first).
@@ -29,11 +29,11 @@ Work in a fresh worktree from `origin/main`; `bun install --frozen-lockfile && b
    bun --bun vitest run packages/cf-lite/test/adapter.test.ts
    bun run test:e2e        # builds every adapter app and every `create-cf-lite --ui` scaffold under local workerd
    bun run test:dev        # dev SSR per adapter
-   bun run test:browser    # shared Playwright suite, five adapter apps
+   bun run test:browser    # shared Playwright suite, four adapter apps
    ```
    Expected: pass. A failure goes to [test-ci-triage](test-ci-triage.md) first.
 3. Upstream bump: raise the UI library only within the declared peer range unless the owner agreed a new range; bump the adapter's `devDependencies`, rerun step 2 and `bun run size:check`. A peer-range change is a user-visible change: `CHANGELOG.md` line plus the adapter table in `README.md` and `docs/adapters.md`.
-4. A transitive advisory: classify per [dependency-audit](dependency-audit.md). A consumer-side pin (the pattern of the Solid `seroval` override, [D-008](../docs/DECISIONS.md#d-008-solid-js-1x-pins-a-vulnerable-seroval-the-override-is-carried-by-the-consumer-app)) must be written by `cf-lite add <ui>` and `create-cf-lite --ui <ui>` and documented in `docs/adapters.md`, with the removal condition.
+4. A transitive advisory: classify per [dependency-audit](dependency-audit.md). A consumer-side pin (the pattern of the former Solid `seroval` override, [D-008](../docs/DECISIONS.md#d-008-solid-js-1x-pins-a-vulnerable-seroval-the-override-is-carried-by-the-consumer-app)) must be documented in `docs/adapters.md`, with the removal condition (the scaffold `overrides` mechanism was removed together with `@cf-lite/solid`, [D-027](../docs/DECISIONS.md)).
 5. Contract change in core: update every adapter in the same PR or mark the unsupported ones in `docs/adapters.md` with the reason (for example Svelte has no `bind`, one-chunk streaming); never leave one silently broken.
 6. Numbers: the per-adapter benchmark is regenerated with `node bench/adapters.mjs` and its page carries date and versions; never copy a size into prose elsewhere.
 7. `bun run docs:check && bun run llms:check && bun run size:check`.

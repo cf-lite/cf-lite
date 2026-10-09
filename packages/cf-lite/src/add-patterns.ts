@@ -10,7 +10,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-const PREVIEWABLE = ["react", "preact", "vue", "solid"] as const;
+const PREVIEWABLE = ["react", "preact", "vue"] as const;
 const README = `# Patterns
 
 Atomic folders are optional - use \`atoms/\`, \`molecules/\`, \`organisms/\` or flat folders, whatever the team already speaks.

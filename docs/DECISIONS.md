@@ -121,8 +121,8 @@ What was decided about cf-lite, by which role, why, and what in this repository 
 | decision | Every `solid-js` 1.x release pins a `seroval` version that the audit flags as critical. A library cannot force a transitive version on its consumers, so `@cf-lite/solid` requires `solid-js >=1.9.15`, documents the `seroval` override and `cf-lite add solid` / `create-cf-lite --ui solid` write it into the app. This is a known issue, kept until a stable `solid-js` ships the patched `seroval`. |
 | why | The only option for a library that cannot own its consumers' lockfile; the audit gate (D-007) is met on the app side. |
 | scope | `@cf-lite/solid` |
-| evidence | `docs/adapters.md` (section Solid: minimum `solid-js` and the `seroval` override), `docs/published.md`, `packages/solid/package.json` |
-| status | active |
+| evidence | `docs/published.md`; the files this entry named (the Solid section of docs/adapters.md, packages/solid/package.json) were removed by D-027 |
+| status | superseded by D-027 |
 | lastChecked | 2026-10-06 by doc agent |
 
 ### D-009 cf-lite stays UI-agnostic; UI adapters are opt-in
@@ -358,3 +358,16 @@ What was decided about cf-lite, by which role, why, and what in this repository 
 | evidence | `docs/published.md` (`npm view` results of 2026-10-06), tag `v0.4.2` |
 | status | active |
 | lastChecked | 2026-10-06 by maintainer |
+
+### D-027 `@cf-lite/solid` is removed from the repository
+| field | value |
+|---|---|
+| date | 2026-10-09 |
+| decided by | product owner |
+| source | owner statement (task brief dropsolid, 2026-10-09) |
+| decision | `@cf-lite/solid` is dropped: low usage (26 weekly downloads) against the cost of keeping a fifth adapter in every suite. The package, `examples/site-solid`, the `solid` option of `create-cf-lite` and `cf-lite add`, and the scaffold `overrides` mechanism that only carried the `seroval` pin (D-008) are removed. Maintained packages: `cf-lite`, `create-cf-lite`, `@cf-lite/preact`, `@cf-lite/react`, `@cf-lite/svelte`, `@cf-lite/vue`. Existing `@cf-lite/solid@0.4.2` on the registry is not touched by this change (no unpublish, no deprecate here). |
+| why | Adapter upkeep and the shared test matrix scale with the number of adapters; the adapter had the smallest audience and the only open advisory (D-008). |
+| scope | `packages/solid`, `examples/site-solid`, `packages/create-cf-lite`, `packages/cf-lite/src/add.ts`, docs, CI and release surfaces |
+| evidence | `CHANGELOG.md` (Unreleased, Removed), `docs/published.md` |
+| status | active |
+| lastChecked | 2026-10-09 by maintainer |

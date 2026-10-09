@@ -10,7 +10,7 @@ Bun 1.4+ ([bun.sh](https://bun.sh); CI pins 1.4.0). Node 22+ is needed only for 
 ```bash
 git clone <this repo> && cd cf-lite
 bun install --frozen-lockfile
-bun run build          # tsc for the core + the five UI adapters (dist/ is git-ignored)
+bun run build          # tsc for the core + the four UI adapters (dist/ is git-ignored)
 ```
 
 A fresh clone needs only that one `bun install`: `bun run typecheck` builds first and then runs a second, near-instant `bun install --frozen-lockfile`, because the workspace `cf-lite` bin can only be linked once `dist/` exists.
@@ -25,7 +25,7 @@ The repo is an npm-workspaces monorepo: `packages/*` (published) and `examples/*
 | `bun run test` | build + vitest unit tests | - |
 | `bun run test:e2e` | builds demo, every adapter app and every `create-cf-lite --ui` scaffold, runs them under local workerd and asserts *which requests reach the Worker* | network (bun install of scaffolds) |
 | `bun run test:dev` | `vite dev` behaviour (SSR route add/remove restart, dev SSR per adapter) | - |
-| `bun run test:browser` | Playwright (chromium) shared suite against the demo, the five adapter apps, the htmx example and an axe gate on the docs site | `bunx playwright install chromium` |
+| `bun run test:browser` | Playwright (chromium) shared suite against the demo, the four adapter apps, the htmx example and an axe gate on the docs site | `bunx playwright install chromium` |
 | `bun run test:browser:all` | the same in chromium + firefox + webkit (local only; CI is chromium-only) | `bunx playwright install firefox webkit` (+ `sudo bunx playwright install-deps webkit`); `PW_DEMO_PORT` if 18999 is taken |
 | `bun run perf:check` | build time / cold start / request p50 / Worker size vs `bench/budgets.json` (local or cron, not CI) | - |
 

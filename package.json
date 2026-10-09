@@ -9,8 +9,8 @@
     "site"
   ],
   "scripts": {
-    "build": "bun run --filter cf-lite build && bun run --filter @cf-lite/react --filter @cf-lite/preact --filter @cf-lite/vue --filter @cf-lite/svelte --filter @cf-lite/solid build",
-    "typecheck": "bun run build && bun install --frozen-lockfile && bun run --filter cf-lite-demo --filter cf-lite-site --filter cf-lite-site-preact --filter cf-lite-site-solid --filter cf-lite-site-htmx --filter cf-lite-site-gated --filter cf-lite-site-uploads --filter cf-lite-site-routes --filter cf-lite-site-images --filter cf-lite-site-jobs --filter cf-lite-site-forms --filter cf-lite-site-security --filter cf-lite-site-blog --filter cf-lite-site-ai --filter cf-lite-site-isr --filter cf-lite-site-isr-route --filter cf-lite-site-i18n --filter cf-lite-site-islands --filter cf-lite-site-draft --filter cf-lite-site-catchall --filter cf-lite-cms-head --filter cf-lite-site-rsc --filter cf-lite-site-patterns --filter cf-lite-a11y-demo typecheck",
+    "build": "bun run --filter cf-lite build && bun run --filter @cf-lite/react --filter @cf-lite/preact --filter @cf-lite/vue --filter @cf-lite/svelte build",
+    "typecheck": "bun run build && bun install --frozen-lockfile && bun run --filter cf-lite-demo --filter cf-lite-site --filter cf-lite-site-preact --filter cf-lite-site-htmx --filter cf-lite-site-gated --filter cf-lite-site-uploads --filter cf-lite-site-routes --filter cf-lite-site-images --filter cf-lite-site-jobs --filter cf-lite-site-forms --filter cf-lite-site-security --filter cf-lite-site-blog --filter cf-lite-site-ai --filter cf-lite-site-isr --filter cf-lite-site-isr-route --filter cf-lite-site-i18n --filter cf-lite-site-islands --filter cf-lite-site-draft --filter cf-lite-site-catchall --filter cf-lite-cms-head --filter cf-lite-site-rsc --filter cf-lite-site-patterns --filter cf-lite-a11y-demo typecheck",
     "test": "bun run build && bun --bun vitest run --exclude '**/*-workerd.test.ts' && node ./node_modules/vitest/vitest.mjs run storage-workerd webhook-workerd",
     "test:e2e": "node scripts/e2e.mjs && node scripts/cache-e2e.mjs && node scripts/run-sites.mjs && node scripts/scaffold-e2e.mjs && node scripts/auth-e2e.mjs && node scripts/middleware-e2e.mjs && node scripts/storage-e2e.mjs && node scripts/route-e2e.mjs && node scripts/images-e2e.mjs && node scripts/jobs-e2e.mjs && node scripts/actions-e2e.mjs && node scripts/routeconf-e2e.mjs && node scripts/security-e2e.mjs && node scripts/realtime-e2e.mjs && node scripts/metadata-e2e.mjs && node scripts/ai-e2e.mjs && node scripts/isr-e2e.mjs && node scripts/isr-route-e2e.mjs && node scripts/dx-e2e.mjs && node scripts/i18n-e2e.mjs && node scripts/draft-e2e.mjs && node scripts/catchall-e2e.mjs && node scripts/cms-head-e2e.mjs && node scripts/rsc-e2e.mjs && node scripts/rsc-isr-e2e.mjs && node scripts/rsc-i18n-draft-e2e.mjs && node scripts/view-transitions-e2e.mjs",
     "test:browser": "bun run build && node scripts/build-sites.mjs && playwright test",
@@ -34,9 +34,5 @@
     "typescript": "~5.9.3",
     "vitest": "^4.1.0"
   },
-  "packageManager": "bun@1.4.0",
-  "overrides": {
-    "seroval": "^1.6.3",
-    "seroval-plugins": "^1.6.3"
-  }
+  "packageManager": "bun@1.4.0"
 }

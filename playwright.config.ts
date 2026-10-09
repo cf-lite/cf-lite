@@ -6,7 +6,7 @@ const wrangler = join(dirname(createRequire(import.meta.url).resolve("wrangler/p
 // PW_DEMO_PORT moves the demo server when 18999 is taken (shared host).
 // Browsers: chromium only by default (CI). PW_BROWSERS=chromium,firefox,webkit (bun run test:browser:all) runs the whole suite in each; docs/testing.md.
 // Requires built apps (bun run test:browser does that). PW_ONLY=site-vue runs just that app.
-// `site*` are the same app in react / preact / vue / svelte / solid: e2e/site.spec.ts is one shared suite run against each.
+// `site*` are the same app in react / preact / vue / svelte: e2e/site.spec.ts is one shared suite run against each.
 const only = process.env.PW_ONLY;
 const browsers = (process.env.PW_BROWSERS ?? "chromium").split(",").map((b) => b.trim()).filter(Boolean);
 const device = { chromium: "Desktop Chrome", firefox: "Desktop Firefox", webkit: "Desktop Safari" } as const;
@@ -16,8 +16,7 @@ const servers = [
   { name: "site-preact", port: 19997, dir: "examples/site-preact" },
   { name: "site-vue", port: 19996, dir: "examples/site-vue" },
   { name: "site-svelte", port: 19995, dir: "examples/site-svelte" },
-  { name: "site-solid", port: 19994, dir: "examples/site-solid" },
-  { name: "site-images", port: 19992, dir: "examples/site-images", spec: "images" }, // WP-IMAGES: layout-shift check
+    { name: "site-images", port: 19992, dir: "examples/site-images", spec: "images" }, // WP-IMAGES: layout-shift check
   { name: "site-htmx", port: 19993, dir: "examples/site-htmx", spec: "htmx" }, // renderer "none" + htmx/Alpine: its own spec (no routes/layouts)
   { name: "site-forms", port: 19991, dir: "examples/site-forms", spec: "actions" }, // server actions + forms: its own spec (no-JS and JS flows)
   { name: "site-security", port: 19990, dir: "examples/site-security", spec: "security" }, // WP-SECURITY: strict CSP on static + SSR pages, no violations

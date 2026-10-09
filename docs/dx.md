@@ -23,7 +23,7 @@ A template is a directory under `packages/create-cf-lite/templates/<name>/` laid
 ## `cf-lite add <target>`
 
 `d1|kv|r2|hyperdrive` (bindings), `patterns` (pattern folders + states + mocks + aliases, [coming-from-mvc.md](coming-from-mvc.md)), `do|cron|queue|workflow|email <name>`, `auth`, `placement`, `ci`, `tailwind`, `ai`, `images`, `turnstile`, `rsc`, and UI adapters
-(`react|preact|vue|svelte|solid|htmx`). Every target is **idempotent** (second run changes nothing), never overwrites a file you own, keeps comments in
+(`react|preact|vue|svelte|htmx`). Every target is **idempotent** (second run changes nothing), never overwrites a file you own, keeps comments in
 `wrangler.jsonc`, and prints what it changed.
 
 `--dry-run` (every target): runs the real code against a scratch copy of the app and prints the difference - `+ path` new file, `~ path` edited with `+line` / `-line` -

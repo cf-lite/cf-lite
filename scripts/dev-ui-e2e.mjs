@@ -10,7 +10,7 @@ const root = new URL("../", import.meta.url).pathname;
 const pj = createRequire(root).resolve("vite/package.json");
 const vitebin = join(dirname(pj), JSON.parse(readFileSync(pj, "utf8")).bin.vite);
 
-for (const site of ["site", "site-preact", "site-vue", "site-svelte", "site-solid", "site-htmx"]) {
+for (const site of ["site", "site-preact", "site-vue", "site-svelte", "site-htmx"]) {
   const port = 19800 + Math.floor(Math.random() * 90);
   const child = spawn(process.execPath, [vitebin, "dev", "--port", String(port), "--strictPort"], { cwd: join(root, "examples", site), env: { ...process.env, FORCE_COLOR: "0", NO_COLOR: "1" }, detached: true, stdio: ["ignore", "pipe", "pipe"] });
   let log = "";

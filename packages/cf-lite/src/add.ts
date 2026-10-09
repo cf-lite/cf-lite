@@ -13,7 +13,7 @@ import type { AdapterScaffold } from "./adapter.js";
 import { PRESETS, isPreset } from "./presets.js";
 
 /** UI adapter packages, plus built-in presets that keep `renderer: "none"` (htmx = htmx + Alpine over server-rendered Hono fragments). */
-export const KNOWN_UI = ["react", "preact", "vue", "svelte", "solid", "htmx"] as const;
+export const KNOWN_UI = ["react", "preact", "vue", "svelte", "htmx"] as const;
 
 export interface AddOptions {
   /** Run the package manager (default true). Tests and offline use pass false. */
@@ -92,7 +92,6 @@ export async function addUi(dir: string, ui: string, opts: AddOptions = {}): Pro
     for (const [k, v] of Object.entries(deps)) if (!pj2.dependencies?.[k] && !pj2.devDependencies?.[k]) (pj2[field] ??= {})[k] = v;
   };
   add("dependencies", sc.deps); add("devDependencies", sc.devDeps);
-  for (const [k, v] of Object.entries(sc.overrides ?? {})) if (typeof pj2.overrides?.[k] === "undefined") (pj2.overrides ??= {})[k] = v;
   for (const f of ["dependencies", "devDependencies"]) if (pj2[f]) pj2[f] = Object.fromEntries(Object.entries(pj2[f]).sort(([a], [b]) => a.localeCompare(b)));
   const pjText = JSON.stringify(pj2, null, 2) + "\n";
   const depsChanged = pjText !== readFileSync(pjPath, "utf8");
