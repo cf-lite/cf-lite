@@ -17,7 +17,7 @@ afterEach(() => { for (const d of tmps.splice(0)) rmSync(d, { recursive: true, f
 const out = (d: string, g: Generator, n: string, o: GenOptions = {}) => Object.fromEntries(planGenerate(d, g, n, o).files.map((f) => [f.path, f.content]));
 
 describe("generated output (snapshots = the frozen conventions)", () => {
-  for (const ui of ["react", "preact", "solid", "vue", "svelte"]) {
+  for (const ui of ["react", "preact", "vue", "svelte"]) {
     it(`page + component, ${ui}`, () => {
       const d = app(ui);
       expect(out(d, "page", "about")).toMatchSnapshot();

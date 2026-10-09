@@ -16,7 +16,7 @@ relying on them *(flagged for the owner: backend 1 needs a real zone; usage beyo
 ## Use
 
 ```tsx
-import { Image } from "@cf-lite/react/image";   // preact | vue | solid the same; svelte: import Image from "@cf-lite/svelte/Image.svelte"
+import { Image } from "@cf-lite/react/image";   // preact | vue the same; svelte: import Image from "@cf-lite/svelte/Image.svelte"
 
 <Image src="/img/hero.png" alt="" width={1600} height={800} sizes="(min-width: 800px) 800px, 100vw" priority />
 ```

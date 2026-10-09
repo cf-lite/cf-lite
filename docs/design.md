@@ -32,7 +32,7 @@ request ──► Workers static assets ──► file found?  yes ─► served
 | `cf-lite/client` | framework-free router: `createRouter`, `navigate`, `handleLinkClick`, head updates. The adapter renders `router.current` (layouts stay mounted via the UI framework's own reconciliation) | ~100 LOC |
 | `cf-lite/adapter` | the `UiAdapter` contract (types + `defineAdapter`) | types only |
 | `cf-lite/server` | `ssr()` — layouts + head + the adapter's stream into the built HTML shell | ~50 LOC |
-| `@cf-lite/react｜preact｜vue｜svelte｜solid` | UI adapters: `mount`/`Link`, server `render`, Vite plugin, scaffold descriptor (see `docs/adapters.md`) | ~60-90 LOC each |
+| `@cf-lite/react｜preact｜vue｜svelte` | UI adapters: `mount`/`Link`, server `render`, Vite plugin, scaffold descriptor (see `docs/adapters.md`) | ~60-90 LOC each |
 | `cf-lite/head` | `Head` types; merge + string-inject (static/ssr) + DOM apply (SPA) | ~85 LOC |
 | `cf-lite prerender` | build step: loads `render = "static"` routes through a throwaway Vite SSR server in Node, writes `<path>/index.html` (+ SPA-shell copies, see below) | ~70 LOC |
 | `cf-lite` CLI | `dev` = `vite dev`, `build` = `vite build` + prerender, `deploy [--env x]` = fresh build for that env + `wrangler deploy`, `prepare` = regenerate, `add <ui>` = install + wire an adapter | ~110 LOC |
@@ -118,7 +118,7 @@ Heads of the layouts and the page are merged outer → inner: `title` = innermos
 
 ### UI adapters: `cfLite({ renderer: react() })` (v0.3)
 
-The core imports no UI framework. `renderer` is a `UiAdapter` (from `@cf-lite/react|preact|vue|svelte|solid` or your own) or `"none"` (default: no page routes, your own `index.html`,
+The core imports no UI framework. `renderer` is a `UiAdapter` (from `@cf-lite/react|preact|vue|svelte` or your own) or `"none"` (default: no page routes, your own `index.html`,
 API + static assets only). An adapter supplies the framework's Vite plugin(s), the extensions of route files, and two module specifiers: a *client* module (`mount`, `Link`) and a *server* module
 (`render` -> stream/string, `renderToString` for the build-time prerender). The generated `.cf-lite/app.ts` imports the server module only when an SSR route exists, so an SSR-free app still bundles no renderer.
 Full contract, what the core owns vs the adapter, and the per-framework notes: [`docs/adapters.md`](adapters.md). Preact (native, with `react`->`preact/compat` aliases via `@preact/preset-vite`, now with HMR)

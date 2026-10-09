@@ -68,7 +68,7 @@ describe("addUi (no install)", () => {
     "index.html": `<div id="root"></div><script type="module" src="/app/main.tsx"></script>`,
     "tsconfig.json": JSON.stringify({ compilerOptions: { strict: true } }),
   });
-  for (const ui of ["react", "preact", "vue", "svelte", "solid"]) {
+  for (const ui of ["react", "preact", "vue", "svelte"]) {
     it(`${ui}: wires config, deps, entry, starter; second run changes nothing`, async () => {
       const root = starter();
       const first = await addUi(root, ui, { install: false });

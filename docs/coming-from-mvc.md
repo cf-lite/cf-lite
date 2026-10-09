@@ -36,7 +36,7 @@ tsconfig.json   paths: "@/*" -> app/*, "@patterns/*" -> app/patterns/*
 package.json    scripts: dev:mock, patterns:export
 ```
 
-It needs a UI adapter that can bind props (react, preact, vue, solid); run `cf-lite add react` first otherwise.
+It needs a UI adapter that can bind props (react, preact, vue); run `cf-lite add react` first otherwise.
 
 ## Folder conventions
 

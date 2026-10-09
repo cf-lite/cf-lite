@@ -23,5 +23,5 @@ Every breaking change ships with a codemod in `cf-lite upgrade` ([dx.md](dx.md))
 
 ## Support matrix (what CI exercises today)
 
-Bun 1.4 (every PR: install, build, typecheck, unit tests, docs tooling), Node 24 (every PR: Miniflare-based e2e, coverage) and Node 22 (weekly), Vite 8, `@cloudflare/vite-plugin` 1.x, wrangler 4.x, Hono 4.x, React 19, Preact 10, Vue 3.5, Svelte 5, Solid 1.9. Scaffolds pin a
+Bun 1.4 (every PR: install, build, typecheck, unit tests, docs tooling), Node 24 (every PR: Miniflare-based e2e, coverage) and Node 22 (weekly), Vite 8, `@cloudflare/vite-plugin` 1.x, wrangler 4.x, Hono 4.x, React 19, Preact 10, Vue 3.5, Svelte 5. Scaffolds pin a
 compatibility date; `cf-lite doctor` warns beyond 180 days ([doctor.md](doctor.md), CFL004).

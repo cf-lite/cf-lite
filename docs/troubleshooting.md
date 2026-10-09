@@ -35,7 +35,7 @@ Two indexes: by `cf-lite doctor` code, then by the text you see. Run `bunx cf-li
 | `cf-lite: could not load HTML shell` | `index.html` lost its `id="root"` | restore the root element |
 | `dist/client/index.html missing` on an API-only app | prerender needs a shell | keep a minimal `index.html` ([field-notes.md](field-notes.md)) |
 | `no components found under app/` (`cfl export`) | nothing to render | add `app/components/Name.tsx` or `Name.states.ts` ([export.md](export.md)) |
-| `this UI adapter cannot render components` | Svelte has no `UiServer.bind` | use react, preact, vue or solid for preview/export ([preview.md](preview.md)) |
+| `this UI adapter cannot render components` | Svelte has no `UiServer.bind` | use react, preact or vue for preview/export ([preview.md](preview.md)) |
 | `cf-lite dev` says it needs Node | Miniflare hangs under Bun, so the dev server runs on Node ([bun-first.md](bun-first.md)) | put Node 22+ on PATH |
 | `cf-lite: command not found` right after `bun install --frozen-lockfile` | workspace bin symlink is created before `dist/` exists | `bun run build && bun install` |
 | `/api/draft/enable` answers 503 | `DRAFT_SECRET` missing (CFL012) | [draft-mode.md](draft-mode.md) |

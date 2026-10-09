@@ -21,7 +21,7 @@ it("none: minimal template with the project name, no UI framework, no build outp
   await expect(scaffold(dir)).rejects.toThrow(/not empty/);
 });
 
-for (const ui of ["react", "preact", "vue", "svelte", "solid"]) {
+for (const ui of ["react", "preact", "vue", "svelte"]) {
   it(`--ui ${ui}: template + adapter wired (config, deps, entry, starter routes)`, async () => {
     const dir = join(base(), "app-" + ui);
     await scaffold(dir, { ui });
@@ -42,12 +42,6 @@ it("scaffolds from a template that lives under node_modules (the published-packa
   await scaffold(dir, { template: tpl });
   expect(existsSync(join(dir, ".gitignore"))).toBe(true);
   expect(existsSync(join(dir, "server/worker.ts"))).toBe(true);
-});
-
-it("--ui solid: pins patched seroval via overrides (solid-js 1.9 pins a vulnerable ~1.5)", async () => {
-  const dir = join(base(), "app-solid-ovr");
-  await scaffold(dir, { ui: "solid" });
-  expect(JSON.parse(read(dir, "package.json")).overrides).toEqual({ seroval: "^1.6.3", "seroval-plugins": "^1.6.3" });
 });
 
 it("--ui htmx: preset files + deps, renderer stays none, no adapter package", async () => {

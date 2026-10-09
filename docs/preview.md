@@ -58,7 +58,7 @@ With [draft mode](draft-mode.md) configured, the draft routes also live under `/
 
 ## Adapters
 
-Rendering a component with props needs `bind(Component, props)` on the adapter's server module. React, Preact, Vue and Solid have it; **Svelte does not** (its server entry renders a fixed `Root.svelte`): the index says so and `cfl export` stops with the same message. A custom adapter adds one function:
+Rendering a component with props needs `bind(Component, props)` on the adapter's server module. React, Preact and Vue have it; **Svelte does not** (its server entry renders a fixed `Root.svelte`): the index says so and `cfl export` stops with the same message. A custom adapter adds one function:
 
 ```ts
 export const bind = (Component: unknown, props: Record<string, unknown>) => () => createElement(Component, props);

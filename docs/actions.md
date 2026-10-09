@@ -102,7 +102,6 @@ Per adapter:
 | React / Preact | `@cf-lite/react/form`, `@cf-lite/preact/form` | `<Form action="?/save" optimistic={…} onResult={…}>`; `useFormStatus()` → `{ pending, result }` inside it |
 | Vue | `@cf-lite/vue/form` | `app.directive("enhance", vEnhance)`; `<form method="post" action="?/save" v-enhance="{ onResult }">` |
 | Svelte | `@cf-lite/svelte/form` | `<form method="post" action="?/save" use:enhance={{ onResult }}>` |
-| Solid | `@cf-lite/solid/form` | `<form method="post" action="?/save" ref={useEnhance({ onResult })}>` |
 
 Only React and Preact have ready-made components; the others share the same `enhance()` core and are covered by its tests, not by per-adapter e2e (see "Not done yet").
 

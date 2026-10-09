@@ -14,7 +14,7 @@ export const head: { title: string; meta: Record<string, string>[] } = {
 };
 
 const blurbs: Record<string, string> = {
-  "getting-started": "Scaffold, pick a UI, deploy.", design: "Request flow, render modes, what is left out.", adapters: "React, Preact, Vue, Svelte, Solid, htmx.",
+  "getting-started": "Scaffold, pick a UI, deploy.", design: "Request flow, render modes, what is left out.", adapters: "React, Preact, Vue, Svelte, htmx.",
   benchmarks: "Size, CPU and cold start — with the caveats.", "field-notes": "What broke in real use and how it was fixed.", upgrading: "Breaking changes between 0.x.", changelog: "Release history.",
 };
 
@@ -30,7 +30,7 @@ export default function Home() {
         <section class="facts" aria-label="Key facts">
           <div class="fact"><b>0 ms</b><span>Worker CPU for static pages and redirects — the assets layer answers, nothing is invoked.</span></div>
           <div class="fact"><b>7–74 KiB</b><span>Worker size (gzip), from an API-only app to a React SSR app.</span></div>
-          <div class="fact"><b>6 UIs</b><span>React, Preact, Vue, Svelte, Solid or htmx/Alpine — one small adapter each.</span></div>
+          <div class="fact"><b>5 UIs</b><span>React, Preact, Vue, Svelte or htmx/Alpine — one small adapter each.</span></div>
         </section>
         <div class="home-cols">
           <section>

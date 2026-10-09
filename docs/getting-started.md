@@ -31,7 +31,7 @@ bun packages/create-cf-lite/index.mjs examples/my-app --template blog --ui react
 bun install && bun run --filter my-app dev
 ```
 
-`--template` is `minimal | blog | saas | api | realtime | ai-chat | patterns` (see [dx.md](dx.md)); `--ui` is `react | preact | vue | svelte | solid | htmx | none`
+`--template` is `minimal | blog | saas | api | realtime | ai-chat | patterns` (see [dx.md](dx.md)); `--ui` is `react | preact | vue | svelte | htmx | none`
 ([adapters.md](adapters.md)). `examples/*` is a Bun workspace, so one `bun install` links `cf-lite` and `@cf-lite/*`.
 
 ## 2. The shape of an app

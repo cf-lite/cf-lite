@@ -50,4 +50,4 @@ Sorted components, states and keys; LF newlines and exactly one trailing newline
 | `--check` | write nothing; exit 1 when the directory differs from what would be written |
 | `--mock` | render with `MOCK=1` (`mocks/` served to components that fetch) |
 
-Needs a UI adapter whose server module has `bind` (react, preact, vue, solid; see [preview.md](preview.md#adapters)).
+Needs a UI adapter whose server module has `bind` (react, preact, vue; see [preview.md](preview.md#adapters)).

@@ -61,7 +61,7 @@ export function appFacts(dir: string): AppFacts {
   try { name = JSON.parse(readFileSync(join(dir, "package.json"), "utf8")).name || name; } catch { /* no package.json */ }
   const vc = ["vite.config.ts", "vite.config.mts", "vite.config.js"].map((f) => join(dir, f)).find(existsSync);
   const cfg = vc ? readFileSync(vc, "utf8") : "";
-  const ui = ["react", "preact", "vue", "svelte", "solid"].find((u) => cfg.includes(`@cf-lite/${u}`)) ?? "none (plain server-rendered HTML)";
+  const ui = ["react", "preact", "vue", "svelte"].find((u) => cfg.includes(`@cf-lite/${u}`)) ?? "none (plain server-rendered HTML)";
   let bindings: string[] = [];
   const w = ["wrangler.jsonc", "wrangler.json"].map((f) => join(dir, f)).find(existsSync);
   if (w) { try { bindings = [...declaredBindings(parseJsonc(readFileSync(w, "utf8")))].sort(); } catch { /* unparsable: doctor reports it */ } }

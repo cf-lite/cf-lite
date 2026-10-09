@@ -31,7 +31,7 @@ export interface ToolDef {
 }
 
 const DRY: Schema = { type: "boolean", description: "Preview only: return the files/diff, write nothing (default false)." };
-const UI: Schema = { type: "string", enum: ["react", "preact", "solid", "vue", "svelte"], description: "UI adapter. Only when the user names a framework; otherwise leave out (auto-detected from vite.config)." };
+const UI: Schema = { type: "string", enum: ["react", "preact", "vue", "svelte"], description: "UI adapter. Only when the user names a framework; otherwise leave out (auto-detected from vite.config)." };
 const obj = (properties: Record<string, Schema>, required: string[] = []): ToolDef["inputSchema"] =>
   ({ type: "object", properties: { ...properties, dryRun: DRY }, required, additionalProperties: false });
 

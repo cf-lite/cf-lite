@@ -46,9 +46,9 @@ Work in a fresh worktree from `origin/main`. One version = one branch = one PR. 
    | stability | [`docs/stability.md`](../docs/stability.md) tiers still true; promoting a feature to stable is the owner's |
    | docs | `docs:check`, `llms:check`, `docs:snippets` at 0; [docs brief](docs.md) for anything stale |
    | decisions | an entry exists for every policy change the version contains ([DECISIONS](../docs/DECISIONS.md)) |
-5. **Tarball content scan**, for every package that will be published (`cf-lite`, `create-cf-lite`, `@cf-lite/preact|react|solid|svelte|vue`; never `@cf-lite/testing` or `@cf-lite/playwright`, which are `private`):
+5. **Tarball content scan**, for every package that will be published (`cf-lite`, `create-cf-lite`, `@cf-lite/preact|react|svelte|vue`; never `@cf-lite/testing` or `@cf-lite/playwright`, which are `private`):
    ```bash
-   mkdir -p /tmp/cfl-pack && for d in packages/cf-lite packages/create-cf-lite packages/react packages/preact packages/solid packages/svelte packages/vue; do (cd $d && npm pack --pack-destination /tmp/cfl-pack --silent); done
+   mkdir -p /tmp/cfl-pack && for d in packages/cf-lite packages/create-cf-lite packages/react packages/preact packages/svelte packages/vue; do (cd $d && npm pack --pack-destination /tmp/cfl-pack --silent); done
    for t in /tmp/cfl-pack/*.tgz; do echo "== $t"; tar tzf "$t" | grep -Ei '(^|/)(\.env[^/]*|\.npmrc|\.dev\.vars[^/]*|[^/]*\.(pem|key|map|tgz|log))$'; done
    ```
    Expected: only `*.example` placeholder files (`.dev.vars.example` in the templates). Compare the rest of `tar tzf` with the `files` field of that package. Then scan the unpacked content for what must never ship:

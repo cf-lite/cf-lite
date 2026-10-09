@@ -33,10 +33,10 @@ Work in a fresh worktree from `origin/main`.
    | Path starts at | Class | Effect |
    |---|---|---|
    | a published package's `dependencies` (`cf-lite`, `@cf-lite/<ui>`, `create-cf-lite`) | production | **critical/high blocks a release or publish** ([D-007](../docs/DECISIONS.md#d-007-a-critical-or-high-advisory-in-a-production-dependency-blocks-a-release-or-publish)) until fixed or accepted by the owner in writing |
-   | a published package's `peerDependencies` | consumer-side | document the advisory and any override in the adapter or CLI docs; cannot be forced from here (see [D-008](../docs/DECISIONS.md#d-008-solid-js-1x-pins-a-vulnerable-seroval-the-override-is-carried-by-the-consumer-app) for the pattern) |
+   | a published package's `peerDependencies` | consumer-side | document the advisory and any override in the adapter or CLI docs; cannot be forced from here (see the former Solid case, [D-008](../docs/DECISIONS.md#d-008-solid-js-1x-pins-a-vulnerable-seroval-the-override-is-carried-by-the-consumer-app) for the pattern) |
    | `devDependencies`, a private package (`@cf-lite/testing`, `@cf-lite/playwright`), `examples/*`, `site/` | dev-only | does not block; report in the PR, fix when cheap |
 4. Fix within ranges first: `bun audit fix` shows the proposal; apply it only when the lockfile diff touches nothing outside the advisory's path. Crossing a major version (`bun audit fix --latest`) is the owner's decision.
-5. An override (for example the `seroval` override documented in [`docs/adapters.md`](../docs/adapters.md)) carries a doc entry with the advisory id and the removal condition.
+5. An override (for example the former `seroval` override of `@cf-lite/solid`, [D-008](../docs/DECISIONS.md#d-008-solid-js-1x-pins-a-vulnerable-seroval-the-override-is-carried-by-the-consumer-app)) carries a doc entry with the advisory id and the removal condition.
 6. After any change: `bun run build && bun run typecheck && bun run test && bun run docs:check`.
 7. Record the result, dated, in the PR body (not in a doc as a number): advisories found, classification, what you fixed, what stays and why. A standing "accepted" item gets a [decision entry](../docs/DECISIONS.md) with a `lastChecked` date so it is re-read.
 

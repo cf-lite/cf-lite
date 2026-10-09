@@ -8,7 +8,7 @@ import type { Context } from "hono";
 
 export interface OgElement { type: string; props: Record<string, unknown> }
 export type OgNode = OgElement | string | number | null | undefined | false | OgNode[];
-/** Element factory for framework-free templates: `h("div", { style: { display: "flex" } }, "Hello")`. React/Preact/Solid(element-shaped) JSX also works. */
+/** Element factory for framework-free templates: `h("div", { style: { display: "flex" } }, "Hello")`. React/Preact (element-shaped) JSX also works. */
 export function h(type: string | ((p: any) => OgNode), props: Record<string, unknown> | null, ...children: OgNode[]): OgElement {
   const p = { ...props, children: children.length <= 1 ? children[0] : children };
   return typeof type === "function" ? (type(p) as OgElement) : { type, props: p };

@@ -6,7 +6,7 @@
 No framework runtime sits between your code and workerd, and static traffic never wakes the Worker.
 
 > Status: **0.4, open source (MIT), version 0.x** - API may still change between minors (policy: [`docs/stability.md`](docs/stability.md)).
-> Currently on npm: `cf-lite`, `create-cf-lite` and `@cf-lite/preact|react|solid|svelte|vue` at 0.4.2, dist-tag `latest` (checked 2026-10-06 with `npm view <package> version`; list: [`docs/published.md`](docs/published.md)). 0.4.2 is the first release published from this repository.
+> Currently on npm: `cf-lite`, `create-cf-lite` and `@cf-lite/preact|react|svelte|vue` at 0.4.2, dist-tag `latest` (checked 2026-10-06 with `npm view <package> version`; list: [`docs/published.md`](docs/published.md)). 0.4.2 is the first release published from this repository.
 > **History:** `create-cf-lite` 0.4.0 failed when run through `npx` / `npm create` (its copy filter skipped templates installed under `node_modules`); 0.4.1 and 0.4.2 fix it, so `create-cf-lite@latest` works.
 > Design + rationale: [`docs/design.md`](docs/design.md). Decisions: [`docs/DECISIONS.md`](docs/DECISIONS.md).
 
@@ -25,7 +25,7 @@ cf-lite is an independent open-source project and is not affiliated with, sponso
 * a Vite plugin + tiny CLI (`cf-lite dev|build|deploy|add`) on top of [`@cloudflare/vite-plugin`](https://www.npmjs.com/package/@cloudflare/vite-plugin), [Hono](https://hono.dev) and Workers static assets;
 * file conventions compiled at *build* time: `app/routes/**` (pages, nested `_layout`, per-route `head`), `server/api/*.ts` (one Hono sub-app per file, typed client via `hc<ApiType>`), `public/_redirects`;
 * three page kinds per route: SPA (default), **static** (`export const render = "static"`: prerendered, zero JS), **SSR** (`render = "ssr"` + `loader`, streamed, optional hydration);
-* **UI-agnostic**: React, Preact, Vue, Svelte or Solid via one adapter package, an htmx + Alpine preset (server-rendered fragments, no UI framework), or none (API + your own `index.html`).
+* **UI-agnostic**: React, Preact, Vue or Svelte via one adapter package, an htmx + Alpine preset (server-rendered fragments, no UI framework), or none (API + your own `index.html`).
 
 **It is not**
 * not a meta-framework with a server runtime: no data-router, no middleware hooks in front of `/api/*`, no ISR/image pipeline;
@@ -40,7 +40,7 @@ Needs Bun 1.4+ ([bun.sh](https://bun.sh)) and, to deploy, a Cloudflare account (
 
 ```bash
 git clone <this repo> cf-lite && cd cf-lite && bun install --frozen-lockfile && bun run build      # once
-bun packages/create-cf-lite/index.mjs examples/my-app --ui react --no-install   # or preact | vue | svelte | solid | htmx | none
+bun packages/create-cf-lite/index.mjs examples/my-app --ui react --no-install   # or preact | vue | svelte | htmx | none
 bun install && bun run --filter my-app dev
 ```
 
@@ -52,7 +52,6 @@ From the registry (`create-cf-lite` 0.4.1 or later; 0.4.2 is current) the same i
 | `preact` | `.tsx` (React code works via compat aliases), smallest client (~8 KiB gz) | `bunx cf-lite add preact` |
 | `vue` | `app/routes/*.vue`, Vue 3.5, `renderToWebStream` | `bunx cf-lite add vue` |
 | `svelte` | `app/routes/*.svelte`, Svelte 5 (sync SSR, no streaming) | `bunx cf-lite add svelte` |
-| `solid` | `app/routes/*.tsx`, Solid 1.9 JSX, `renderToStream` SSR + fine-grained hydration (`vite-plugin-solid`) | `bunx cf-lite add solid` |
 | `htmx` | renderer stays `none`: Hono routes return HTML fragments (`hono/html`), `hx-*` attributes swap them in, Alpine for small client state; no JSX, no component compiler | `bunx cf-lite add htmx` |
 | `none` (default) | `server/api/*.ts` + your own `index.html`; no UI framework installed | - |
 
@@ -85,13 +84,12 @@ Workers static assets, which are not billed as Worker requests. Gates/middleware
 | `@cf-lite/preact` | `preact-render-to-string/stream` | `hydrate` | prefresh | `.tsx` | 18 KiB | 8 KiB |
 | `@cf-lite/vue` | `renderToWebStream` | `createSSRApp` | Vue HMR | `.vue` | 38 KiB | 28 KiB |
 | `@cf-lite/svelte` | `render()` (sync, one chunk) | `hydrate` | Svelte HMR | `.svelte` | 17 KiB | 18 KiB |
-| `@cf-lite/solid` | `renderToStream` | `hydrate` (fine-grained) | Solid HMR | `.tsx` | 23 KiB | 10 KiB |
 | htmx preset (no adapter) | `hono/html` fragments from `server/api/ui.ts` | none (htmx swaps HTML) | Vite full reload | n/a | 8 KiB** | 38 KiB (htmx + Alpine) |
 
 \* same app, minified, SSR route + layouts + API; client = hydrated SSR page up front ([`bench/RESULTS-adapters.md`](bench/RESULTS-adapters.md)).
 \*\* `examples/site-htmx` re-implements the pages as fragments, so it is an order-of-magnitude comparison, not a like-for-like row.
 Contract for writing a new adapter (and why not Vike): [`docs/adapters.md`](docs/adapters.md). Examples: `examples/demo` (React showcase with a Durable Object + WebSocket + cron),
-`examples/site*` (the same app in five UI frameworks; `site-htmx` is the htmx/Alpine flavour).
+`examples/site*` (the same app in four UI frameworks; `site-htmx` is the htmx/Alpine flavour).
 
 ## Benchmarks - summary and honest caveats
 
@@ -120,9 +118,9 @@ The defensible claims are *size, CPU and cold-start*, not a warm-latency win.
 
 ```
 packages/cf-lite          core: Vite plugin, framework-free client router, ssr helper, CLI, optional modules (sso, d1, kv-cache, cache, e2e-login)
-packages/react|preact|vue|svelte|solid   UI adapters (@cf-lite/*)
+packages/react|preact|vue|svelte   UI adapters (@cf-lite/*)
 packages/create-cf-lite   scaffold
-examples/demo, examples/site*     showcase + same app in 5 UIs + htmx flavour
+examples/demo, examples/site*     showcase + same app in 4 UIs + htmx flavour
 bench/                    reproducible benchmarks (local: bench/run.sh; live workers.dev: bench/live/)
 e2e/, scripts/            Playwright + workerd behaviour tests
 ```

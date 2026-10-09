@@ -7,13 +7,13 @@
 * `--dry-run` writes nothing and lists the files (`+ path`);
 * `--json` prints one object on stdout (also for errors, exit code 1), the surface the LLM layer / `cfl mcp` will call ([roadmap-dx.md](roadmap-dx.md) section 5.1).
 
-UI adapter (`react|preact|solid|vue|svelte`) is read from `vite.config.*`; `--ui x` overrides. `page` and `component` need one; `api` and `test` do not.
+UI adapter (`react|preact|vue|svelte`) is read from `vite.config.*`; `--ui x` overrides. `page` and `component` need one; `api` and `test` do not.
 
 | Command | Writes | Options |
 |---|---|---|
 | `cfl g page posts/[id]` | `app/routes/posts/[id].tsx` (`.vue`/`.svelte` per adapter): `render`, `head`, optional `loader`, `params` typed | `--render static` (default) `\|ssr\|spa`, `--loader` |
 | `cfl g api items` | `server/api/items.ts` (Hono sub-app: list / get / validated POST), mounted at `/api/items` by the api convention | `--mock` also `mocks/api/items.json` (the `MOCK=1` fixture), `--seed` also `seeds/items.d1.json` |
-| `cfl g component Card` | `app/components/Card.tsx` + `Card.states.ts` (`defineStates`: `default`, `long`, `empty`) so `/__preview` and `cfl export` show it immediately | `--island` (`Card.island.tsx`, react/preact/solid), `--folder` (`Card/Card.tsx`), `--dir app/patterns/atoms` |
+| `cfl g component Card` | `app/components/Card.tsx` + `Card.states.ts` (`defineStates`: `default`, `long`, `empty`) so `/__preview` and `cfl export` show it immediately | `--island` (`Card.island.tsx`, react/preact), `--folder` (`Card/Card.tsx`), `--dir app/patterns/atoms` |
 | `cfl g test items` | `test/api/items.test.ts` (`testApp()`: list, 404, POST validation); for a page `test/routes/<name>.test.ts` (renders, 200 HTML); for a component `test/components/Card.states.test.ts` (states are data: `default` exists, each resolves to props) | `--kind page\|api\|component` (default: detected from the files that exist) |
 
 Svelte has no preview `bind()` yet, so its component gets no states file (the command says so). Names are validated: pages use route-file segments (`about`, `posts/[id]`, `docs/[...rest]`, `(group)/pricing`), components are PascalCase, api names are lowercase with dashes; `--dir` must stay under `app/` and outside `app/routes`.

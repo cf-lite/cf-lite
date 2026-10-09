@@ -13,8 +13,8 @@ TanStack Start docs/architecture, plus the framework docs for Vue / Svelte SSR A
 | System | How a UI framework plugs in | Copy | Avoid |
 |---|---|---|---|
 | **Astro** | An *integration* is an object with hooks (`astro:config:setup` …). A UI framework is a *renderer*: `addRenderer({ name, clientEntrypoint, serverEntrypoint })` — two module paths, server one exports `check` + `renderToStaticMarkup`, client one hydrates an island. `updateConfig` merges Vite plugins. `astro add x` installs the package **and edits `astro.config`** *(docs)* | The split **server entry / client entry as module specifiers** (no function crosses the build boundary — the Worker/browser only ever imports plain modules). `add` command that installs + edits config idempotently. Integration as a *factory returning data + Vite plugins*. | Island model (per-component hydration) — cf-lite hydrates a whole page; `check()` auto-detection between renderers — we have exactly one UI per app, so no runtime dispatch. |
-| **Vike** | "Extensions" (`vike-react`, `vike-vue`, `vike-solid`) are packages with a `+config.js` that set `onRenderHtml` / `onRenderClient`, `Page`/`Layout`/`Head` settings; everything is a *setting* in a cumulative config system *(docs)*. The same public API a user would use ("extensions use the same API you use"). | The **principle**: adapters use only the public contract, so a user can write their own (Solid, Lit, htmx) without touching cf-lite. One adapter package per UI framework, named `<prefix>-<ui>`. Head/Layout as first-class per-route settings — we already have `_layout` + `head`. | The config-as-settings meta-system (`+config.js` cumulative/env-split settings) and `pageContext` — a large surface for something we resolve at build time with a file scan. Vike's server story: see §2. |
-| **TanStack Start** | Router/start *core* packages are framework-agnostic; per-UI packages (`react-start`, `solid-start`) wrap them *(docs page unavailable when fetched — this is from general knowledge, unverified)*. | Same shape we are aiming for: agnostic core + thin UI package. | Its router/server-function runtime in the Worker for every request — the thing cf-lite refuses. |
+| **Vike** | "Extensions" (`vike-react`, `vike-vue`) are packages with a `+config.js` that set `onRenderHtml` / `onRenderClient`, `Page`/`Layout`/`Head` settings; everything is a *setting* in a cumulative config system *(docs)*. The same public API a user would use ("extensions use the same API you use"). | The **principle**: adapters use only the public contract, so a user can write their own (Lit, htmx) without touching cf-lite. One adapter package per UI framework, named `<prefix>-<ui>`. Head/Layout as first-class per-route settings — we already have `_layout` + `head`. | The config-as-settings meta-system (`+config.js` cumulative/env-split settings) and `pageContext` — a large surface for something we resolve at build time with a file scan. Vike's server story: see §2. |
+| **TanStack Start** | Router/start *core* packages are framework-agnostic; per-UI packages (`react-start`) wrap them *(docs page unavailable when fetched — this is from general knowledge, unverified)*. | Same shape we are aiming for: agnostic core + thin UI package. | Its router/server-function runtime in the Worker for every request — the thing cf-lite refuses. |
 
 ## 2. Should cf-lite build on Vike? — No. Evidence
 
@@ -29,7 +29,7 @@ cf-lite's hard rules: (1) zero framework code on the request path for static/red
   * adding `@cloudflare/vite-plugin` with `main: "virtual:vike-server-entry"` failed: `Failed to resolve main entry file`.
   I could not get a Worker bundle in 15 min. That is **not proof it is impossible** (Vike docs say Cloudflare is supported through `vike-cloudflare`, which I did not try — 0.2.8), only that the Cloudflare path is in flux and is not something cf-lite can sit on without inheriting that churn. Reproduce: `/tmp/vike-spike2` (scratch, not committed) — `npx vike build && npx wrangler deploy --dry-run`.
 * **(2) small Worker / (4) build-time.** Vike ships its router + page-config runtime (virtual modules) into the server bundle. I have no measured Worker size for it because of the above, so no number is claimed. cf-lite's core-only Worker is 14.9 KiB gzip (`bench/RESULTS.md`).
-* **What building on Vike would cost us:** dropping `run_worker_first` scoping, the generated plain-Hono `app.ts`, `_redirects`-only redirects, our `hc<ApiType>` typed API, and the benchmark story, in exchange for getting React/Vue/Solid extensions that already exist. Conversely Vike's extension quality is real: `vike-vue` / `vike-solid` have years of edge cases handled. cf-lite's adapters will be *thinner* (no islands, no pageContext) and therefore less capable — that is the trade, and it is acceptable for the target (API + mostly-static sites).
+* **What building on Vike would cost us:** dropping `run_worker_first` scoping, the generated plain-Hono `app.ts`, `_redirects`-only redirects, our `hc<ApiType>` typed API, and the benchmark story, in exchange for getting React/Vue extensions that already exist. Conversely Vike's extension quality is real: `vike-vue` has years of edge cases handled. cf-lite's adapters will be *thinner* (no islands, no pageContext) and therefore less capable — that is the trade, and it is acceptable for the target (API + mostly-static sites).
 
 **Recommendation: keep cf-lite's own adapter layer**, modelled on Astro's renderer split (server entry + client entry modules) with Vike's "extensions only use the public contract" discipline. Revisit if Vike ships a first-class Workers build that keeps static/redirect off the Worker. No migration was started.
 
@@ -43,7 +43,6 @@ Only what is relevant to adapters. *(docs)* = from the framework docs, *(measure
 | **Preact 10** | `preact-render-to-string/stream` `renderToReadableStream` | sequential chunks (no out-of-order Suspense) | `hydrate` | `@preact/preset-vite` (prefresh HMR; also aliases react→compat) | ~29 KiB gzip Worker *(measured)*. `preact/compat` semantic gaps remain if react-flavoured libraries are used |
 | **Vue 3.5** | `vue/server-renderer` `renderToWebStream` / `renderToString` *(docs)* | yes (async components awaited in order) | `createSSRApp().mount()` | `@vitejs/plugin-vue` (HMR) | Node-only functions (`renderToNodeStream`, `pipeToNodeWritable`) must not be used; the web ones are fine. `<script setup>` cannot `export` — route config (`render`, `head`, `loader`) goes in a plain `<script lang="ts">` block next to it |
 | **Svelte 5** | `svelte/server` `render(Component, { props })` → `{ body, head }` *(docs)* | **no** — sync string (async SSR needs `experimental.async`), adapter emits one chunk | `hydrate(Component, { target, props })` | `@sveltejs/vite-plugin-svelte` (HMR) | component must be compiled with the server option — vite-plugin-svelte does this per environment; `svelte:head` content comes back in `head`, which the adapter merges into the shell. Route config lives in `<script module>` |
-| **Solid 1.9** *(built in 0.4)* | `solid-js/web` `renderToStream` (piped into a `TransformStream`), `renderToString` for prerender | yes | `hydrate` (`vite-plugin-solid({ ssr: true })` compiles hydratable output) | `vite-plugin-solid` (Solid HMR) | **Hydration ids must match level for level**: the server renders `compose(view)` as the root and the client hydrates the very same root (an extra wrapper component shifts every `data-hk` and throws "Hydration Mismatch"). `generateHydrationScript()` goes to `<head>` only when the page hydrates (`View.hydrate`). Layouts are `<Dynamic>` levels, so an SPA navigation only re-creates levels whose component changed |
 
 ## 4. The adapter contract
 
@@ -113,7 +112,7 @@ Rules that keep the core honest:
 * **Factory returns data, functions stay out of the Worker/browser.** Learned from Astro: only specifiers cross into bundles.
 * **`renderer: "react"` string is removed** (breaking, 0.3): `cfLite({ renderer: react() })`. A string would force the core to depend on every adapter. The error for a missing adapter says what to install.
 * **Whole-page hydration, no islands.** Same as 0.2.
-* **`cf-lite add <ui>`** installs `@cf-lite/<ui>` + its framework deps, rewrites `vite.config.ts` (`renderer: <ui>()`), writes the entry + starter route if absent; every step guarded so re-running changes nothing. **`npm create cf-lite@latest my-app -- --ui none|react|preact|vue|svelte|solid|htmx`** = the `none` template + the same `add` code path (one implementation, tested once).
+* **`cf-lite add <ui>`** installs `@cf-lite/<ui>` + its framework deps, rewrites `vite.config.ts` (`renderer: <ui>()`), writes the entry + starter route if absent; every step guarded so re-running changes nothing. **`npm create cf-lite@latest my-app -- --ui none|react|preact|vue|svelte|htmx`** = the `none` template + the same `add` code path (one implementation, tested once).
 
 ### htmx + Alpine preset (0.4)
 
@@ -122,16 +121,6 @@ and drops in `server/api/ui.ts` (Hono routes returning `hono/html` fragments, wh
 the `htmx.org` / `alpinejs` dependencies, and `hx-get="/api/ui" hx-trigger="load"` on `<div id="root">`. The preset lives in `packages/cf-lite/src/presets.ts`
 (`PRESETS`), reuses the same idempotent `addUi` code path and adds no vite config. Trade-offs: no static prerender of fragments (the shell is an SPA `index.html`),
 no layouts/`head` per route (fragments are not pages), htmx + Alpine (~38 KiB gzip) ship on every page, and htmx's `hx-on`/`hx-vals="js:"` need `eval` (Vite warns about it at build; it is not used by the starter).
-
-### Solid: minimum `solid-js` and the `seroval` override
-
-`@cf-lite/solid` needs `solid-js >=1.9.15` (peer dependency; `vite-plugin-solid` ^2.11.14). Every `solid-js` 1.x release pins `seroval ~1.5`, which `npm audit` flags as critical (GHSA-p6vx-979v-rg4c, GHSA-jp82-f5mq-hwhp; fixed in `seroval` 1.6.3). `seroval` 1.6.x is API-compatible with what `solid-js/web` uses (adapter tests, the Solid example app build and its workerd e2e pass on 1.6.8), but a library cannot force a transitive version on its consumers, so the app has to carry the override: `cf-lite add solid` / `create-cf-lite --ui solid` write it for you.
-
-```json
-{ "overrides": { "seroval": "^1.6.3", "seroval-plugins": "^1.6.3" } }
-```
-
-(bun and npm read `overrides`; pnpm: `pnpm.overrides`; yarn: `resolutions`.) Drop it once a stable `solid-js` ships with the patched `seroval`.
 
 ## 5. Out of scope for this round (noted, not built)
 

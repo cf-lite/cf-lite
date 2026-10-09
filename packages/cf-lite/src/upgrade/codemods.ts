@@ -30,7 +30,7 @@ export function diskFs(dir: string, dryRun = false, written: Map<string, string>
   };
 }
 
-const UIS = ["react", "preact", "vue", "svelte", "solid"];
+const UIS = ["react", "preact", "vue", "svelte"];
 const addImport = (src: string, line: string) => {
   if (src.includes(line)) return src;
   const lines = src.split("\n"); let last = -1;
@@ -47,7 +47,7 @@ export const rendererCodemod: Codemod = {
     let ui: string | undefined;
     for (const f of ["vite.config.ts", "vite.config.mts", "vite.config.js"]) {
       const src = fs.read(f); if (src === null) continue;
-      const m = /renderer:\s*["'](react|preact|vue|svelte|solid)["']/.exec(src);
+      const m = /renderer:\s*["'](react|preact|vue|svelte)["']/.exec(src);
       if (!m) { if (/renderer:\s*["']\w+["']/.test(src) && !/renderer:\s*["']none["']/.test(src)) res.manual.push(`${f}: unknown renderer string - see docs/adapters.md`); continue; }
       ui = m[1];
       const out = addImport(src.replace(m[0], `renderer: ${ui}()`), `import ${ui} from "@cf-lite/${ui}";`);

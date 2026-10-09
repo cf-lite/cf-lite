@@ -83,7 +83,7 @@ export function createPreview(o: PreviewOptions) {
   async function frame(c: Context, id: string, state: string, fragment: boolean) {
     const it = byId.get(id);
     if (!it) return text(`preview: no component "${id}"`, 404);
-    if (!o.ui.bind) return text("preview: this UI adapter has no bind() - component preview supports react, preact, vue and solid", 501);
+    if (!o.ui.bind) return text("preview: this UI adapter has no bind() - component preview supports react, preact and vue", 501);
     if (o.mocks && o.mockOn) installMocks(await o.mocks(), new URL(c.req.url).origin);
     let html: string, head: string | undefined;
     try {
@@ -188,7 +188,7 @@ var o=$("open");o.style.visibility="visible";o.href=frameUrl(i.id,st.s||i.states
 $("tab").onclick=function(){go({tab:st.tab==="html"?"preview":"html"})};$("q").oninput=function(){nav()};
 fetch(P+"/api/manifest").then(function(r){return r.json()}).then(function(m){M=m;
 var mk=$("mocks");if(m.mock.routes.length){mk.textContent=(m.mock.enabled?"MOCK=1 on":"MOCK=1 off (set it to serve these)")+": "+m.mock.routes.map(function(r){return r.method+" "+(r.host||"")+r.pattern}).join(", ")}else mk.textContent="none (mocks/ folder)";
-draw();if(!m.adapterBind)$("stage").append(el("p",{class:"note err"},["This UI adapter cannot render components in preview (react, preact, vue, solid can)."]))});
+draw();if(!m.adapterBind)$("stage").append(el("p",{class:"note err"},["This UI adapter cannot render components in preview (react, preact, vue can)."]))});
 })();
 </script></body></html>`;
 }

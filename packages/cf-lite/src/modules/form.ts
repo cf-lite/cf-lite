@@ -1,6 +1,6 @@
 /**
  * Browser-side progressive enhancement for `<form method="post" action="?/name">` (`cf-lite/modules/form`). Framework-free:
- * the React/Preact `Form`, Vue `vEnhance`, Svelte `use:enhance` and Solid helper in the adapters are thin wrappers over `enhance()`.
+ * the React/Preact `Form`, Vue `vEnhance`, and Svelte `use:enhance` in the adapters are thin wrappers over `enhance()`.
  *
  * Without this code (or JS) the form still works: the browser posts, the Worker answers 303 or a re-rendered page.
  * With it: `fetch` instead of a page load, pending state + double-submit guard, action result delivered to callbacks,

@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// bun create cf-lite my-app --  (or: npm create cf-lite@latest my-app --) [--template minimal|blog|saas|api|realtime|ai-chat|patterns] [--ui none|react|preact|vue|svelte|solid|htmx] [--no-install]
+// bun create cf-lite my-app --  (or: npm create cf-lite@latest my-app --) [--template minimal|blog|saas|api|realtime|ai-chat|patterns] [--ui none|react|preact|vue|svelte|htmx] [--no-install]
 // Copies the minimal template (renderer "none"), then runs the same code as `cf-lite add <ui>` - one implementation, tested once.
 import { cpSync, existsSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -9,7 +9,7 @@ import { addAuth } from "cf-lite/add-auth";
 import { addJob } from "cf-lite/add-jobs";
 import { addPatterns } from "cf-lite/add-patterns";
 
-const UIS = ["none", "react", "preact", "vue", "svelte", "solid", "htmx"];
+const UIS = ["none", "react", "preact", "vue", "svelte", "htmx"];
 export const TEMPLATES = ["minimal", "blog", "saas", "api", "realtime", "ai-chat", "patterns"];
 /** Bun first: `bun create` / `bunx` / running under Bun -> bun; an explicit pnpm/yarn/npm launcher is respected. */
 const packageManager = () => {

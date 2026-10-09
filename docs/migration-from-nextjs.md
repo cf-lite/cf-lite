@@ -12,7 +12,7 @@ need a server runtime it does not have. This page is the map. The exhaustive cap
 | `middleware.ts` on every request | `server/middleware.ts`; the `matcher` also becomes `run_worker_first`, so unmatched paths cost nothing |
 | Vercel KV / Blob / Postgres / Edge Config | KV, R2, D1 (or Hyperdrive), Analytics Engine, used directly |
 | Any host | Cloudflare only |
-| React only | React, Preact, Vue, Svelte, Solid, or htmx; one adapter package |
+| React only | React, Preact, Vue, Svelte, or htmx; one adapter package |
 
 ## Feature map
 
